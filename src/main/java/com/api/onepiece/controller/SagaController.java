@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.api.onepiece.entity.Saga;
 import com.api.onepiece.error.MyEntityNotFoundException;
+import com.api.onepiece.error.NameAlreadyExist;
+import com.api.onepiece.repository.SagaRepository;
 import com.api.onepiece.service.SagaService;
 
 
@@ -22,6 +24,9 @@ public class SagaController {
 
     @Autowired
     SagaService sagaService;
+
+    @Autowired
+    SagaRepository sagaRepository;
     
     @GetMapping("/sagaForm")
     public String sagaForm(ModelMap model){
@@ -74,23 +79,24 @@ public class SagaController {
     }
 
     @PostMapping("/editSaga")
-    public String postEditSaga(@Valid @ModelAttribute("sagaForm") Saga saga, BindingResult result, ModelMap model) {
+    public String postEditSaga(@Valid @ModelAttribute("sagaForm") Saga saga, BindingResult result, ModelMap model) throws Exception {
         try {
             if (result.hasErrors()) {
                 model.addAttribute("sagaForm", saga);
                 model.addAttribute("editMode", true);
                 resetAttributesByValidationError(model);
-            } else {
+            } else{
                 sagaService.updateSaga(saga);
             }
-        } catch (Exception e) {
+        } catch (NameAlreadyExist e) {
             model.addAttribute("formErrorMessage", e.getMessage());
+            model.addAttribute("sagaList", sagaService.getAllSagas());
             model.addAttribute("sagaForm", saga);
             model.addAttribute("editMode", true);
             resetAttributesByValidationError(model);
         }
 
-        return "redirect:/sagaForm";
+        return "admin-pages/admin-page";
     }
 
     @GetMapping("/deleteSaga/{id}")

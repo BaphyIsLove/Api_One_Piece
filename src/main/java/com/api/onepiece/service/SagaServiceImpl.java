@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.api.onepiece.entity.Saga;
 import com.api.onepiece.error.MyEntityNotFoundException;
+import com.api.onepiece.error.NameAlreadyExist;
 import com.api.onepiece.repository.SagaRepository;
 
 @Service
@@ -30,10 +31,16 @@ public class SagaServiceImpl implements SagaService{
 
     @Override
     public Saga updateSaga(Saga fromSaga) throws Exception {
-        Saga toSaga = getSagaById(fromSaga.getId());
-        mapSaga(fromSaga, toSaga);
-        return sagaRepository.save(toSaga);
+        if(sagaRepository.existsByName(fromSaga.getName())){
+            throw new NameAlreadyExist("Ya Existe una saga registrada con ese nombre");
+        } else{
+            Saga toSaga = getSagaById(fromSaga.getId());
+            mapSaga(fromSaga, toSaga);
+            return sagaRepository.save(toSaga);
+        }
     }
+
+    
 
     private void mapSaga(Saga from, Saga to){
         to.setName(from.getName());
