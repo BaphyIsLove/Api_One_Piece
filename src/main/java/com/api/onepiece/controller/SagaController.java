@@ -1,7 +1,6 @@
 package com.api.onepiece.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.api.onepiece.entity.Saga;
 import com.api.onepiece.error.MyEntityNotFoundException;
-import com.api.onepiece.error.NameAlreadyExist;
+import com.api.onepiece.error.CustomFieldValidationException;
 import com.api.onepiece.repository.SagaRepository;
 import com.api.onepiece.service.SagaService;
 
@@ -48,8 +47,8 @@ public class SagaController {
                 model.addAttribute("sagaForm", new Saga());
                 model.addAttribute("listTab", "active");
                 prepareAttributesFormView(model);
-            } catch (DataIntegrityViolationException e){
-                model.addAttribute("formErrorMessage", "Una saga con ese nombre ya se encuentra registrada");
+            } catch (CustomFieldValidationException e){
+                result.rejectValue(e.getField(), null, e.getMessage());
                 model.addAttribute("sagaForm", saga);
                 resetAttributesByValidationError(model);
 
@@ -88,8 +87,8 @@ public class SagaController {
             } else{
                 sagaService.updateSaga(saga);
             }
-        } catch (NameAlreadyExist e) {
-            model.addAttribute("formErrorMessage", e.getMessage());
+        } catch (CustomFieldValidationException e) {
+            result.rejectValue(e.getField(), null, e.getMessage());
             model.addAttribute("sagaList", sagaService.getAllSagas());
             model.addAttribute("sagaForm", saga);
             model.addAttribute("editMode", true);
