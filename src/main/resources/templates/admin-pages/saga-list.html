@@ -1,0 +1,21 @@
+<div class="table-responsive">
+	<table id="listOf" class="table table-bordered table-hover table-striped">
+		<thead class="thead-light">
+			<tr>
+				<th scope="col">Id</th>
+				<th scope="col">Nombre</th>
+				<th></th>
+			</tr>
+			</thead>
+			<tbody>
+				<tr th:each="saga: ${sagaList}">
+					<th th:text="${saga.id}"></th>
+					<td th:text="${saga.name}"></td>
+					<td>
+						<a href="#" th:href="@{'/editSaga/' + ${saga.id}}"><i class="fas fa-edit"></i></a> | 
+						<a type="submit" th:href="@{'deleteSaga/' + ${saga.id}}" onclick="return confirm('¿Estás seguro de que deseas eliminar este registro?')"><i class="fas fa-user-times"></i></a>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
