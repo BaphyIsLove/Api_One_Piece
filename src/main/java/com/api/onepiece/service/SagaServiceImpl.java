@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.api.onepiece.entity.Saga;
+import com.api.onepiece.error.MyEntityNotFoundException;
 import com.api.onepiece.repository.SagaRepository;
 
 @Service
@@ -18,8 +19,8 @@ public class SagaServiceImpl implements SagaService{
     }
 
     @Override
-    public Saga getSagaById(Long id) throws Exception {
-        return sagaRepository.findById(id).orElseThrow(() -> new Exception("Saga no encontrada") );
+    public Saga getSagaById(Long id) throws MyEntityNotFoundException {
+        return sagaRepository.findById(id).orElseThrow(() -> new MyEntityNotFoundException("Saga no encontrada") );
     }
 
     @Override
@@ -39,8 +40,8 @@ public class SagaServiceImpl implements SagaService{
     }
 
     @Override
-    public void deleteSaga(Long id) throws Exception {
-        Saga deleteSaga = sagaRepository.findById(id).orElseThrow(() -> new Exception("Saga no encontrada"));
+    public void deleteSaga(Long id) throws MyEntityNotFoundException {
+        Saga deleteSaga = sagaRepository.findById(id).orElseThrow(() -> new MyEntityNotFoundException("Saga no encontrada"));
         sagaRepository.delete(deleteSaga);
     }
     

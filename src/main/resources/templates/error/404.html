@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<!--JQUERY-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- FRAMEWORK BOOTSTRAP para el estilo de la pagina-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <!-- Los iconos tipo Solid de Fontawesome-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+    <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+
+    <!-- Nuestro css-->
+    <link rel="stylesheet" type="text/css" href="static/css/index.css" th:href="@{/css/index.css}">
+
+	<style type="text/css">
+		body{
+			padding-top:4%;
+		}
+
+		img{
+			width:60%;
+		}
+        h4{
+            color: white; /* Cambia el color del texto a blanco */
+        }
+
+	</style>
+</head>
+<body>
+	<div class="container text-center">
+		<div class="mx-auto col-12 card ">
+			<div class="card-header bg-dark">
+				<h4>404 - NOT FOUND</h4>
+				<h4>Parece que te has perdido</h4>
+			</div>		
+			<div class="card-body">
+				<a href="/userForm" ><img src="static/img/404.png" th:src="@{/img/404.png}"/></a>
+                <a class="btn btn-dark btn-block" onclick="goBack()" style="color: white;">Regresar</a>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+function goBack() {
+    window.history.back();
+}
+</script>
+</html>
