@@ -86,6 +86,9 @@ public class SagaController {
                 resetAttributesByValidationError(model);
             } else{
                 sagaService.updateSaga(saga);
+                prepareAttributesFormView(model);
+                model.addAttribute("sagaForm", new Saga());
+                model.addAttribute("listTab", "active");
             }
         } catch (CustomFieldValidationException e) {
             result.rejectValue(e.getField(), null, e.getMessage());

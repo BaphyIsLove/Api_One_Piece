@@ -7,6 +7,7 @@ import com.api.onepiece.entity.Saga;
 import com.api.onepiece.error.MyEntityNotFoundException;
 import com.api.onepiece.error.CustomFieldValidationException;
 import com.api.onepiece.repository.SagaRepository;
+import com.api.onepiece.util.UniqueKeyGenerator;
 
 @Service
 public class SagaServiceImpl implements SagaService{
@@ -29,6 +30,8 @@ public class SagaServiceImpl implements SagaService{
         if(sagaRepository.existsByName(saga.getName())){
             throw new CustomFieldValidationException("Ya existe una saga con ese nombre", "name");
         } else{
+            Long lastNum = sagaRepository.findMaxNumberByPrefix("S");
+            saga.setUniqueKey(UniqueKeyGenerator.generateUniqueKey("S", lastNum));
             return sagaRepository.save(saga);
         }
     }
@@ -44,8 +47,6 @@ public class SagaServiceImpl implements SagaService{
         }
     }
 
-    
-
     private void mapSaga(Saga from, Saga to){
         to.setName(from.getName());
     }
@@ -55,5 +56,5 @@ public class SagaServiceImpl implements SagaService{
         Saga deleteSaga = sagaRepository.findById(id).orElseThrow(() -> new MyEntityNotFoundException("Saga no encontrada"));
         sagaRepository.delete(deleteSaga);
     }
-    
+
 }

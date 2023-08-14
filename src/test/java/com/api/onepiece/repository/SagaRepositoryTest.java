@@ -1,5 +1,6 @@
 package com.api.onepiece.repository;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -48,4 +49,19 @@ public class SagaRepositoryTest {
         assertFalse(existsByName);
     }
 
+    @Test
+    void testFindMaxNumberByPrefixRegister() {
+        String prefix = "S";
+        Long expectedResult = 1L;
+        
+        Long actualResult = sagaRepository.findMaxNumberByPrefix(prefix);
+        
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    void testFindByName() {
+        Saga findsaga = sagaRepository.findByName("test name").orElse(null);
+        assertEquals("test name", findsaga.getName());
+    }
 }
