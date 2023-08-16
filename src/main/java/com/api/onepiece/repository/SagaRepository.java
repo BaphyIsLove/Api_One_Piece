@@ -15,6 +15,8 @@ public interface SagaRepository extends JpaRepository<Saga, Long>{
 
     public boolean existsByName(String name);
 
+    public boolean existsByUniqueKey(String uniqueKey);
+
     public Optional<Saga> findByUniqueKey(String uniqueKey);
 
     public Optional<Saga> findByName(String name);

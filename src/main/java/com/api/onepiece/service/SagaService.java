@@ -9,12 +9,12 @@ public interface SagaService {
     
     public Iterable<Saga> getAllSagas();
 
-    public Saga getSagaById(Long id) throws Exception;
+    public Saga getSagaByUniqueKey(String uniqueKey) throws Exception;
 
     public Saga createSaga(Saga saga) throws Exception;
 
     public Saga updateSaga(Saga saga) throws Exception;
 
-    public void deleteSaga(Long id) throws Exception;
+    public void deleteSaga(String uniqueKey) throws Exception;
 
 }

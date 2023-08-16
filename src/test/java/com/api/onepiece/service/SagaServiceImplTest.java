@@ -56,7 +56,7 @@ public class SagaServiceImplTest {
     void testDeleteSaga() throws Exception {
         assertEquals(2, sagaRepository.count());
         Saga deleteSaga = sagaRepository.findByName("test name").orElse(null);
-        Long idDeleteSaga = deleteSaga.getId();
+        String idDeleteSaga = deleteSaga.getUniqueKey();
         sagaService.deleteSaga(idDeleteSaga);
         assertEquals(1, sagaRepository.count());
     }
@@ -75,7 +75,7 @@ public class SagaServiceImplTest {
         Saga saga = Saga.builder().name("find saga").uniqueKey("S-003").build();
         sagaRepository.save(saga);
         Saga findSaga = sagaRepository.findByName("find saga").orElse(null);
-        assertEquals(saga.getId(), findSaga.getId());
+        assertEquals(saga.getUniqueKey(), findSaga.getUniqueKey());
     }
     
     @Test

@@ -63,10 +63,10 @@ public class SagaController {
         return "admin-pages/admin-page";
     }
 
-    @GetMapping("/editSaga/{id}")
-    public String editSaga(ModelMap model, @PathVariable(name="id")Long id) throws Exception{ 
+    @GetMapping("/editSaga/{uniqueKey}")
+    public String editSaga(ModelMap model, @PathVariable(name="uniqueKey")String uniqueKey) throws Exception{ 
         try {
-            Saga sagaToEdit = sagaService.getSagaById(id);
+            Saga sagaToEdit = sagaService.getSagaByUniqueKey(uniqueKey);
             model.addAttribute("sagaForm", sagaToEdit);
             model.addAttribute("editMode", true);
             model.addAttribute("formTab", "active");
@@ -101,10 +101,10 @@ public class SagaController {
         return "admin-pages/admin-page";
     }
 
-    @GetMapping("/deleteSaga/{id}")
-    public String deleteSaga(ModelMap model, @PathVariable(name = "id")Long id) throws Exception{
+    @GetMapping("/deleteSaga/{uniqueKey}")
+    public String deleteSaga(ModelMap model, @PathVariable(name = "uniqueKey")String uniqueKey) throws Exception{
         try {
-            sagaService.deleteSaga(id);
+            sagaService.deleteSaga(uniqueKey);
         } catch (MyEntityNotFoundException e) {
             throw e;
         }
@@ -124,9 +124,9 @@ public class SagaController {
     }
 
     protected void resetAttributesByValidationError(ModelMap model){
+        model.addAttribute("showSagasInfo", true);
         model.addAttribute("formTab", "active");
         model.addAttribute("selectedFormOption", "saga");
-        model.addAttribute("showSagasInfo", true);
     }
 
 }

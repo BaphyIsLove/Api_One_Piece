@@ -1,0 +1,23 @@
+<div class="table-responsive">
+	<table id="listOf" class="table table-bordered table-hover table-striped">
+		<thead class="thead-light">
+			<tr>
+				<th scope="col">Id</th>
+				<th scope="col">Nombre</th>
+				<th scope="col">Saga</th>
+				<th></th>
+			</tr>
+			</thead>
+			<tbody>
+				<tr th:each="arc: ${arcList}">
+					<th th:text="${arc.uniqueKey}"></th>
+					<td th:text="${arc.name}"></td>
+					<td <span th:each="saga: ${arc.saga}" th:text="${saga.name}"></span></td>
+					<td>
+						<a href="#" th:href="@{'/editArc/' + ${arc.uniqueKey}}"><i class="fas fa-edit"></i></a> | 
+						<a type="submit" th:href="@{'deleteArc/' + ${arc.uniqueKey}}" onclick="return confirm('¿Estás seguro de que deseas eliminar este registro?')"><i class="fas fa-user-times"></i></a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

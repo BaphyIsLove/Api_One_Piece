@@ -1,34 +1,38 @@
 package com.api.onepiece.entity;
 
-import java.util.Set;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class Saga {
+public class Arc {
     
     @Id
     private String uniqueKey;
 
     @Column(unique = true)
-    @NotBlank(message = "Dale un nombre a la saga")
+    @NotBlank(message = "Dale un nombre al arco")
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "saga", cascade = CascadeType.ALL)
-    private Set<Arc> arcs;
+    @ManyToOne (fetch = FetchType.LAZY)
+    @JoinColumn(name = "saga_uniqueKey")
+    private Saga saga;
 
+    @Transient
+    private String sagaKey;
 }

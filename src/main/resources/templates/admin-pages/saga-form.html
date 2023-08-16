@@ -1,6 +1,6 @@
 <form class="form" role="form" autocomplete="off" th:object="${sagaForm}" th:action="${editMode} ?@{/editSaga} : @{/sagaForm}" method="post">
 
-	<input class="form-control" type="hidden" th:id="${editMode}" th:field="${sagaForm.id}">
+	<input class="form-control" type="hidden" th:id="${editMode}" th:field="${sagaForm.uniqueKey}">
 
     <div class="form-group row">
         <label class="col-lg-3 col-form-label form-control-label">Nombre</label>

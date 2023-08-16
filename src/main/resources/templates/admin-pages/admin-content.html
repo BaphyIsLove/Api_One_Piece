@@ -16,6 +16,7 @@
 					</div>
 					<div class="card-body">
 						<div th:if="${showSagasInfo}" th:insert="~{admin-pages/saga-list.html}" th:remove="tag"></div>
+						<div th:if="${showArcsInfo}" th:insert="~{admin-pages/arc-list.html}" th:remove="tag"></div>
 						
 					</div>
 				</div>
@@ -27,6 +28,7 @@
 					</div>
 					<div class="card-body">
 						<div th:if="${showSagasInfo}" th:insert="~{admin-pages/saga-form.html}" th:remove="tag"></div>
+						<div th:if="${showArcsInfo}" th:insert="~{admin-pages/arc-form.html}" th:remove="tag"></div>
 					</div>
 				</div>
 			</div>

@@ -9,13 +9,13 @@
 			</thead>
 			<tbody>
 				<tr th:each="saga: ${sagaList}">
-					<th th:text="${saga.id}"></th>
+					<th th:text="${saga.uniqueKey}"></th>
 					<td th:text="${saga.name}"></td>
 					<td>
-						<a href="#" th:href="@{'/editSaga/' + ${saga.id}}"><i class="fas fa-edit"></i></a> | 
-						<a type="submit" th:href="@{'deleteSaga/' + ${saga.id}}" onclick="return confirm('¿Estás seguro de que deseas eliminar este registro?')"><i class="fas fa-user-times"></i></a>
+						<a href="#" th:href="@{'/editSaga/' + ${saga.uniqueKey}}"><i class="fas fa-edit"></i></a> | 
+						<a type="submit" th:href="@{'deleteSaga/' + ${saga.uniqueKey}}" onclick="return confirm('¿Estás seguro de que deseas eliminar este registro?')"><i class="fas fa-user-times"></i></a>
 				</td>
 			</tr>
-			</tbody>
-		</table>
-	</div>
+		</tbody>
+	</table>
+</div>
