@@ -1,7 +1,16 @@
 <form class="form" role="form" autocomplete="off" th:object="${sagaForm}" th:action="${editMode} ?@{/editSaga} : @{/sagaForm}" method="post">
 
-	<input class="form-control" type="hidden" th:id="${editMode}" th:field="${sagaForm.uniqueKey}">
-
+	<input class="form-control" type="hidden" th:id="${editMode}" th:field="${sagaForm.id}">
+	
+	<div id="hiddenField" class="collapse" th:if="${editMode}">
+		<div class="form-group row">
+			<label class="col-lg-3 col-form-label form-control-label">Clave</label>
+			<div class="col-lg-9">
+				<input class="form-control" type="text" th:field="${sagaForm.uniqueKey}">
+				<div class="alert-danger" th:if="${#fields.hasErrors('uniqueKey')}" th:errors="*{uniqueKey}"></div>
+			</div>
+		</div>
+	</div>
     <div class="form-group row">
         <label class="col-lg-3 col-form-label form-control-label">Nombre</label>
         <div class="col-lg-9">
@@ -12,8 +21,9 @@
     
 	<div class="form-group row">
 		<div class="col-lg-12 text-center">
-			<a class="btn btn-secondary" th:href="@{/sagaForm/cancel}">Cancelar</a>
-			<input type="submit" class="btn btn-primary" value="Guardar" th:value="${editMode}?'Guardar Cambios':'Crear'">
+			<a class="btn btn-secondary col-lg-3" th:href="@{/sagaForm/cancel}">Cancelar</a>
+			<button th:if="${editMode}" type="button" class="btn btn-primary col-lg-3" data-toggle="collapse" data-target="#hiddenField">Cambiar Clave</button>
+			<input type="submit" class="btn btn-primary col-lg-3" value="Guardar" th:value="${editMode}?'Guardar Cambios':'Crear'">
 		</div>
 	</div>
 	<div class="alert-danger text-center" th:if="${formErrorMessage}" th:text="${formErrorMessage}">Error Message</div>

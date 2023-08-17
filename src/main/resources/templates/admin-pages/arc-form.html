@@ -1,7 +1,16 @@
 <form class="form" role="form" autocomplete="off" th:object="${arcForm}" th:action="${editMode} ?@{/editArc} : @{/arcForm}" method="post">
 
-	<input class="form-control" type="hidden" th:id="${editMode}" th:field="${arcForm.uniqueKey}">
+	<input class="form-control" type="hidden" th:id="${editMode}" th:field="${arcForm.id}">
 
+    <div id="hiddenField" class="collapse" th:if="${editMode}">
+		<div class="form-group row">
+			<label class="col-lg-3 col-form-label form-control-label">Clave</label>
+			<div class="col-lg-9">
+				<input class="form-control" type="text" th:field="${arcForm.uniqueKey}">
+				<div class="alert-danger" th:if="${#fields.hasErrors('uniqueKey')}" th:errors="*{uniqueKey}"></div>
+			</div>
+		</div>
+	</div>
     <div class="form-group row">
         <label class="col-lg-3 col-form-label form-control-label">Nombre</label>
         <div class="col-lg-9">
@@ -12,16 +21,17 @@
     <div class="form-group row">
 		<label class="col-lg-3 col-form-label form-control-label">Sagas</label>
 		<div class="col-lg-9">
-			<select th:field="${arcForm.sagaKey}" class="form-control" size="5">
-				<option th:each="saga : ${sagas}" th:value="${saga.uniqueKey}" th:text="${saga.name}"></option>
+			<select th:field="${arcForm.saga}" class="form-control" size="5">
+				<option th:each="saga : ${sagas}" th:value="${saga.id}" th:text="${saga.name}"></option>
 			</select>
-			<div class="alert-danger" th:if="${#fields.hasErrors('sagaKey')}" th:errors="*{sagaKey}"></div>
+			<div class="alert-danger" th:if="${#fields.hasErrors('saga')}" th:errors="*{saga}"></div>
 		</div>
-	</div>   
+	</div>
 	<div class="form-group row">
 		<div class="col-lg-12 text-center">
-			<a class="btn btn-secondary" th:href="@{/arcForm/cancel}">Cancelar</a>
-			<input type="submit" class="btn btn-primary" value="Guardar" th:value="${editMode}?'Guardar Cambios':'Crear'">
+			<a class="btn btn-secondary col-lg-3" th:href="@{/arcForm/cancel}">Cancelar</a>
+			<button th:if="${editMode}" type="button" class="btn btn-primary col-lg-3" data-toggle="collapse" data-target="#hiddenField">Cambiar Clave</button>
+			<input type="submit" class="btn btn-primary col-lg-3" value="Guardar" th:value="${editMode}?'Guardar Cambios':'Crear'">
 		</div>
 	</div>
 	<div class="alert-danger text-center" th:if="${formErrorMessage}" th:text="${formErrorMessage}">Error Message</div>

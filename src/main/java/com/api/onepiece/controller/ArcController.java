@@ -70,10 +70,10 @@ public class ArcController {
         return "admin-pages/admin-page";
     }
 
-    @GetMapping("/editArc/{uniqueKey}")
-    public String editArc(ModelMap model, @PathVariable(name="uniqueKey")String uniqueKey) throws Exception{
+    @GetMapping("/editArc/{id}")
+    public String editArc(ModelMap model, @PathVariable(name="id")Long id) throws Exception{
         try {
-            Arc arcToEdit = arcService.getArcByUniqueKey(uniqueKey);
+            Arc arcToEdit = arcService.getArcById(id);
             model.addAttribute("arcForm", arcToEdit);
             model.addAttribute("sagas", sagaRepository.findAll());
             model.addAttribute("editMode", true);
@@ -96,6 +96,7 @@ public class ArcController {
             } else {
                 arcService.updateArc(arc);
                 model.addAttribute("arcForm", new Arc());
+                model.addAttribute("sagas", sagaRepository.findAll());
                 model.addAttribute("listTab", "active");
                 prepareAttributesFormView(model);
             }
@@ -110,10 +111,10 @@ public class ArcController {
         return "admin-pages/admin-page";
     }
 
-    @GetMapping("/deleteArc/{uniqueKey}")
-    public String deleteArc(ModelMap model, @PathVariable(name = "uniqueKey")String uniqueKey) throws Exception{
+    @GetMapping("/deleteArc/{id}")
+    public String deleteArc(ModelMap model, @PathVariable(name = "id")Long id) throws Exception{
         try {
-            arcService.deleteArc(uniqueKey);
+            arcService.deleteArc(id);
         } catch (MyEntityNotFoundException e) {
             throw e;
         }

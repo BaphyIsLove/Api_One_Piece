@@ -14,6 +14,8 @@ public interface ArcRepository extends JpaRepository<Arc, Long>{
     
     public boolean existsByName(String name);
 
+    public boolean existsByUniqueKey(String uniqueKey);
+
     public Optional<Arc> findByUniqueKey(String uniqueKey);
 
     public Optional<Arc> findByName(String name);

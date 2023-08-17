@@ -56,7 +56,7 @@ public class SagaServiceImplTest {
     void testDeleteSaga() throws Exception {
         assertEquals(2, sagaRepository.count());
         Saga deleteSaga = sagaRepository.findByName("test name").orElse(null);
-        String idDeleteSaga = deleteSaga.getUniqueKey();
+        Long idDeleteSaga = deleteSaga.getId();
         sagaService.deleteSaga(idDeleteSaga);
         assertEquals(1, sagaRepository.count());
     }

@@ -9,12 +9,12 @@ public interface ArcService {
     
     public Iterable<Arc> getAllArcs();
 
-    public Arc getArcByUniqueKey(String uniqueKey) throws Exception;
+    public Arc getArcById(Long id) throws Exception;
 
     public Arc createArc(Arc arc) throws Exception;
 
     public Arc updateArc(Arc arc) throws Exception;
 
-    public void deleteArc(String uniqueKey) throws Exception;
+    public void deleteArc(Long id) throws Exception;
 
 }

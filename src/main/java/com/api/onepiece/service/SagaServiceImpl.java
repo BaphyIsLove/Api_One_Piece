@@ -21,8 +21,8 @@ public class SagaServiceImpl implements SagaService{
     }
 
     @Override
-    public Saga getSagaByUniqueKey(String uniqueKey) throws MyEntityNotFoundException {
-        return sagaRepository.findByUniqueKey(uniqueKey).orElseThrow(() -> new MyEntityNotFoundException("Saga no encontrada") );
+    public Saga getSagaById(Long id) throws MyEntityNotFoundException {
+        return sagaRepository.findById(id).orElseThrow(() -> new MyEntityNotFoundException("Saga no encontrada") );
     }
 
     @Override
@@ -38,23 +38,25 @@ public class SagaServiceImpl implements SagaService{
 
     @Override
     public Saga updateSaga(Saga fromSaga) throws Exception {
-        if(sagaRepository.existsByName(fromSaga.getName())){
-            throw new CustomFieldValidationException("Ya Existe una saga registrada con ese nombre", "name");
+        Saga toSaga = getSagaById(fromSaga.getId());
+        if(!toSaga.getUniqueKey().equals(fromSaga.getUniqueKey()) && sagaRepository.existsByUniqueKey(fromSaga.getUniqueKey())){
+            throw new CustomFieldValidationException("Ya Existe ese id", "uniqueKey");
+        } else if(!toSaga.getName().equals(fromSaga.getName())&&sagaRepository.existsByName(fromSaga.getName())){
+            throw new CustomFieldValidationException("Ya Existe una saga con ese nombre", "name");
         } else{
-            Saga toSaga = getSagaByUniqueKey(fromSaga.getUniqueKey());
             mapSaga(fromSaga, toSaga);
             return sagaRepository.save(toSaga);
         }
     }
-
-    private void mapSaga(Saga from, Saga to){
+    
+    private void mapSaga(Saga from, Saga to) throws CustomFieldValidationException{
+        to.setUniqueKey(from.getUniqueKey());
         to.setName(from.getName());
-        to.setArcs(from.getArcs());
     }
 
     @Override
-    public void deleteSaga(String uniqueKey) throws MyEntityNotFoundException {
-        Saga deleteSaga = sagaRepository.findByUniqueKey(uniqueKey).orElseThrow(() -> new MyEntityNotFoundException("Saga no encontrada"));
+    public void deleteSaga(Long id) throws MyEntityNotFoundException {
+        Saga deleteSaga = sagaRepository.findById(id).orElseThrow(() -> new MyEntityNotFoundException("Saga no encontrada"));
         sagaRepository.delete(deleteSaga);
     }
 
