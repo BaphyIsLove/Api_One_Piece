@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.api.onepiece.entity.Arc;
+import com.api.onepiece.entity.Volume;
 import com.api.onepiece.error.CustomFieldValidationException;
 import com.api.onepiece.error.MyEntityNotFoundException;
 import com.api.onepiece.repository.ArcRepository;
@@ -42,7 +43,7 @@ public class ArcServiceImpl implements ArcService{
     public Arc updateArc(Arc fromArc) throws Exception {
         Arc toArc = getArcById(fromArc.getId());
         if(!toArc.getUniqueKey().equals(fromArc.getUniqueKey()) && arcRepository.existsByUniqueKey(fromArc.getUniqueKey())){
-            throw new CustomFieldValidationException("Ya Existe ese id", "uniqueKey");
+            throw new CustomFieldValidationException("Ya Existe esa clave", "uniqueKey");
         } else if(!toArc.getName().equals(fromArc.getName())&&arcRepository.existsByName(fromArc.getName())){
             throw new CustomFieldValidationException("Ya Existe un arco con ese nombre", "name");
         } else{
@@ -60,6 +61,10 @@ public class ArcServiceImpl implements ArcService{
     @Override
     public void deleteArc(Long id) throws Exception {
         Arc deleteArc = arcRepository.findById(id).orElseThrow(() -> new MyEntityNotFoundException("Arco no encontrado"));
+        deleteArc.setSaga(null);
+        for(Volume volume:deleteArc.getVolumes()){
+            volume.setArc(null);
+        }
         arcRepository.delete(deleteArc); 
     }
 

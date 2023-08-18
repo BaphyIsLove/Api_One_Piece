@@ -8,34 +8,43 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class Saga {
+public class Volume {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true)
-    @Pattern(regexp = "S-\\d{3}")
+    @Pattern(regexp = "V-\\d{3}")
     private String uniqueKey;
 
     @Column(unique = true)
-    @NotBlank(message = "Dale un nombre a la saga")
+    @NotBlank(message = "Dale un nombre al tomo")
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "saga")
-    private List<Arc> arcs;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "volume_arc",
+        joinColumns = @JoinColumn(name = "volume_id"),
+        inverseJoinColumns = @JoinColumn(name ="arc_id")
+    )
+    private List<Arc> arc;
 
 }

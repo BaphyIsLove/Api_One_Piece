@@ -1,21 +1,31 @@
 <div class="table-responsive">
-	<table id="listOf" class="table table-bordered table-hover table-striped">
-		<thead class="thead-light">
+	<table id="listOf" class="table table-bordered table-hover">
+		<thead class="thead-dark">
 			<tr>
 				<th scope="col" class="col-lg-1">Clave</th>
 				<th scope="col">Nombre</th>
 				<th scope="col">Saga</th>
+				<th scope="col">Tomos</th>
 				<th class="col-lg-1"></th>
 			</tr>
-			</thead>
-			<tbody>
-				<tr th:each="arc: ${arcList}">
-					<th th:text="${arc.uniqueKey}"></th>
-					<td th:text="${arc.name}"></td>
-					<td <span th:each="saga: ${arc.saga}" th:text="${saga.name}"></span></td>
-					<td>
-						<a href="#" th:href="@{'/editArc/' + ${arc.id}}"><i class="fas fa-edit"></i></a> | 
-						<a type="submit" th:href="@{'deleteArc/' + ${arc.id}}" onclick="return confirm('¿Estás seguro de que deseas eliminar este registro?')"><i class="fas fa-user-times"></i></a>
+		</thead>
+		<tbody>
+			<tr th:each="arc: ${arcList}" th:class="${#strings.isEmpty(arc.uniqueKey) or #strings.isEmpty(arc.name) or #lists.isEmpty(arc.saga)} ? 'missing-data-row' : ''">
+				<td th:text="${arc.uniqueKey}"></td>
+				<td th:text="${arc.name}"></td>
+				<td>
+					<ul class="list-unstyled">
+						<li th:each="saga: ${arc.saga}" th:text="${saga.uniqueKey} +' - '+ ${saga.name}"></li>
+					</ul>
+				</td>
+				<td>
+					<ul class="list-unstyled">
+						<li th:each="volumes: ${arc.volumes}" th:text="${volumes.uniqueKey} +' - '+ ${volumes.name}"></li>
+					</ul>
+				</td>
+				<td>
+					<a href="#" th:href="@{'/editArc/' + ${arc.id}}"><i class="fas fa-edit"></i></a> | 
+					<a type="submit" th:href="@{'deleteArc/' + ${arc.id}}" onclick="return confirm('¿Estás seguro de que deseas eliminar este registro?')"><i class="fas fa-user-times"></i></a>
 				</td>
 			</tr>
 		</tbody>

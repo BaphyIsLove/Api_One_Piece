@@ -1,6 +1,6 @@
 <div class="table-responsive">
-    <table id="listOf" class="table table-bordered table-hover table-striped">
-        <thead class="thead-light">
+    <table id="listOf" class="table table-bordered table-hover">
+        <thead class="thead-dark">
             <tr>
                 <th scope="col" class="col-lg-1">Clave</th>
                 <th scope="col">Nombre</th>
@@ -9,7 +9,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="saga: ${sagaList}">
+            <tr th:each="saga: ${sagaList}" th:class="${#strings.isEmpty(saga.uniqueKey) or #strings.isEmpty(saga.name) or #lists.isEmpty(saga.arcs)} ? 'missing-data-row' : ''">
                 <th th:text="${saga.uniqueKey}"></th>
                 <td th:text="${saga.name}"></td>
                 <td>
@@ -19,7 +19,7 @@
                 </td>
                 <td>
                     <a href="#" th:href="@{'/editSaga/' + ${saga.id}}"><i class="fas fa-edit"></i></a> | 
-                    <a type="submit" th:href="@{'deleteSaga/' + ${saga.id}}" onclick="return confirm('¿Estás seguro de que deseas eliminar este registro?')"><i class="fas fa-user-times"></i></a>
+                    <a type="submit" th:href="@{'deleteSaga/' + ${saga.id}}" onclick="return confirm('¿Estás seguro de que deseas eliminar este registro? Esta acción no se puede deshacer y podria alterar todos los registros.')"><i class="fas fa-user-times"></i></a>
                 </td>
             </tr>
         </tbody>

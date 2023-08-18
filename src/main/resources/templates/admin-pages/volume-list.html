@@ -1,0 +1,27 @@
+<div class="table-responsive">
+	<table id="listOf" class="table table-bordered table-hover">
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col" class="col-lg-1">Clave</th>
+				<th scope="col">Nombre</th>
+				<th scope="col">Arco</th>
+				<th class="col-lg-1"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="volume: ${volumeList}" th:class="${#strings.isEmpty(volume.uniqueKey) or #strings.isEmpty(volume.name) or #lists.isEmpty(volume.arc)} ? 'missing-data-row' : ''">
+                <td th:text="${volume.uniqueKey}"></td>
+                <td th:text="${volume.name}"></td>
+                <td>
+                    <ul class="list-unstyled">
+                        <li th:each="arc: ${volume.arc}" th:text="${arc.uniqueKey} +' - '+ ${arc.name}"></li>
+                    </ul>
+                </td>
+                <td>
+                    <a href="#" th:href="@{'/editVolume/' + ${volume.id}}"><i class="fas fa-edit"></i></a> | 
+                    <a type="submit" th:href="@{'deleteVolume/' + ${volume.id}}" onclick="return confirm('¿Estás seguro de que deseas eliminar este registro?')"><i class="fas fa-user-times"></i></a>
+                </td>
+            </tr>
+		</tbody>
+	</table>
+</div>

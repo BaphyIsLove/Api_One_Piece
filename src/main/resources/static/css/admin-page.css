@@ -97,3 +97,7 @@ button{
 .forgot a{
     color: white;
 }
+
+.missing-data-row {
+    background-color: #ffcccc; /* Cambia este color según tus preferencias */
+}
