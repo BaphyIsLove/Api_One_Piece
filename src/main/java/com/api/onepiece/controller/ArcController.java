@@ -14,7 +14,7 @@ import com.api.onepiece.error.CustomFieldValidationException;
 import com.api.onepiece.error.MyEntityNotFoundException;
 import com.api.onepiece.repository.ArcRepository;
 import com.api.onepiece.repository.SagaRepository;
-import com.api.onepiece.service.ArcService;
+import com.api.onepiece.service.ArcServiceImpl;
 
 import jakarta.validation.Valid;
 
@@ -25,7 +25,7 @@ public class ArcController {
     ArcRepository arcRepository;
 
     @Autowired
-    ArcService arcService;
+    ArcServiceImpl arcService;
 
     @Autowired
     SagaRepository sagaRepository;
@@ -47,7 +47,7 @@ public class ArcController {
             resetAttributesByValidationError(model);
         } else {
             try {
-                arcService.createArc(arc);
+                arcService.create(arc);
                 model.addAttribute("arcForm", new Arc());
                 model.addAttribute("listTab", "active");
                 prepareAttributesFormView(model);
@@ -64,7 +64,7 @@ public class ArcController {
             }
         }
 
-        model.addAttribute("arcList", arcService.getAllArcs());
+        model.addAttribute("arcList", arcService.getAll());
         model.addAttribute("sagas", sagaRepository.findAll());
 
         return "admin-pages/admin-page";
@@ -73,7 +73,7 @@ public class ArcController {
     @GetMapping("/editArc/{id}")
     public String editArc(ModelMap model, @PathVariable(name="id")Long id) throws Exception{
         try {
-            Arc arcToEdit = arcService.getArcById(id);
+            Arc arcToEdit = arcService.getById(id);
             model.addAttribute("arcForm", arcToEdit);
             model.addAttribute("sagas", sagaRepository.findAll());
             model.addAttribute("editMode", true);
@@ -94,7 +94,7 @@ public class ArcController {
                 model.addAttribute("sagas", sagaRepository.findAll());
                 resetAttributesByValidationError(model);
             } else {
-                arcService.updateArc(arc);
+                arcService.update(arc);
                 model.addAttribute("arcForm", new Arc());
                 model.addAttribute("sagas", sagaRepository.findAll());
                 model.addAttribute("listTab", "active");
@@ -114,7 +114,7 @@ public class ArcController {
     @GetMapping("/deleteArc/{id}")
     public String deleteArc(ModelMap model, @PathVariable(name = "id")Long id) throws Exception{
         try {
-            arcService.deleteArc(id);
+            arcService.delete(id);
         } catch (MyEntityNotFoundException e) {
             throw e;
         }
@@ -127,7 +127,7 @@ public class ArcController {
     }
 
     private void prepareAttributesFormView(ModelMap model) {
-        model.addAttribute("arcList", arcService.getAllArcs());
+        model.addAttribute("arcList", arcService.getAll());
         model.addAttribute("selectedFormOption", "Arco");
         model.addAttribute("showArcsInfo", true);
     }

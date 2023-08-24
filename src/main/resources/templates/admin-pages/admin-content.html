@@ -12,25 +12,28 @@
 			<div class="tab-pane fade show" th:classappend=" ${listTab}" id="list" role="tabpanel" aria-labelledby="list-tab">
 				<div class="card">
 					<div class="card-header">
-						<h4>Lista de <span th:text="${selectedFormOption}+s"></span></h4>
+						<h4>Lista de <span th:text="${showMangaChapterInfo}?'capitulos': ${selectedFormOption}+s"></span></h4>
 					</div>
 					<div class="card-body">
 						<div th:if="${showSagasInfo}" th:insert="~{admin-pages/saga-list.html}" th:remove="tag"></div>
 						<div th:if="${showArcsInfo}" th:insert="~{admin-pages/arc-list.html}" th:remove="tag"></div>
 						<div th:if="${showVolumesInfo}" th:insert="~{admin-pages/volume-list.html}" th:remove="tag"></div>
-						
+						<div th:if="${showMangaChapterInfo}" th:insert="~{admin-pages/manga-chapter-list.html}" th:remove="tag"></div>
+						<div th:if="${showAnimeChapterInfo}" th:insert="~{admin-pages/anime-chapter-list.html}" th:remove="tag"></div>
 					</div>
 				</div>
 			</div>
 			<div class="tab-pane fade show" th:classappend=" ${formTab}" id="form" role="tabpanel" aria-labelledby="form-tab">
 				<div class="card">
 					<div class="card-header">
-						<h4>Informacion de <span th:text="${selectedFormOption}"></span></h4>
+						<h4>Registro de <span th:text="${selectedFormOption}"></span></h4>
 					</div>
 					<div class="card-body">
 						<div th:if="${showSagasInfo}" th:insert="~{admin-pages/saga-form.html}" th:remove="tag"></div>
 						<div th:if="${showArcsInfo}" th:insert="~{admin-pages/arc-form.html}" th:remove="tag"></div>
 						<div th:if="${showVolumesInfo}" th:insert="~{admin-pages/volume-form.html}" th:remove="tag"></div>
+						<div th:if="${showMangaChapterInfo}" th:insert="~{admin-pages/manga-chapter-form.html}" th:remove="tag"></div>
+						<div th:if="${showAnimeChapterInfo}" th:insert="~{admin-pages/anime-chapter-form.html}" th:remove="tag"></div>
 					</div>
 				</div>
 			</div>

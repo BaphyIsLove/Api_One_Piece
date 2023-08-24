@@ -13,8 +13,7 @@ import com.api.onepiece.entity.Volume;
 import com.api.onepiece.error.CustomFieldValidationException;
 import com.api.onepiece.error.MyEntityNotFoundException;
 import com.api.onepiece.repository.ArcRepository;
-import com.api.onepiece.repository.VolumeRepository;
-import com.api.onepiece.service.VolumeService;
+import com.api.onepiece.service.VolumeServiceImpl;
 
 import jakarta.validation.Valid;
 
@@ -22,9 +21,7 @@ import jakarta.validation.Valid;
 public class VolumeController {
     
     @Autowired
-    VolumeRepository volumeRepository;
-    @Autowired
-    VolumeService volumeService;
+    VolumeServiceImpl volumeService;
     @Autowired
     ArcRepository arcRepository;
 
@@ -44,7 +41,7 @@ public class VolumeController {
             model.addAttribute("volumeForm", volume);
         } else{
             try {
-                volumeService.createVolume(volume);
+                volumeService.create(volume);
                 prepareAttributesFormView(model, "listTab");
                 model.addAttribute("volumeForm", new Volume());
                 model.addAttribute("arcs", arcRepository.findAll());
@@ -66,7 +63,7 @@ public class VolumeController {
     @GetMapping("/editVolume/{id}")
     public String editVolume(ModelMap model, @PathVariable(name = "id")Long id) throws Exception{
         try {
-            Volume volumeToEdit = volumeService.getVolumeById(id);
+            Volume volumeToEdit = volumeService.getById(id);
             prepareAttributesFormView(model, "formTab");
             model.addAttribute("volumeForm", volumeToEdit);
             model.addAttribute("arcs", arcRepository.findAll());
@@ -86,7 +83,7 @@ public class VolumeController {
                 model.addAttribute("arcs", arcRepository.findAll());
                 prepareAttributesFormView(model, "formTab");
             }else{
-                volumeService.updateVolume(volume);
+                volumeService.update(volume);
                 prepareAttributesFormView(model, "listTab");
                 model.addAttribute("volumeForm", new Volume());
                 model.addAttribute("arcs", arcRepository.findAll());
@@ -105,7 +102,7 @@ public class VolumeController {
     @GetMapping("/deleteVolume/{id}")
     public String deleteVolume(ModelMap model, @PathVariable(name = "id")Long id) throws Exception{
         try {
-            volumeService.deleteVolume(id);
+            volumeService.delete(id);
         } catch (MyEntityNotFoundException e) {
             throw e;
         }
@@ -121,6 +118,6 @@ public class VolumeController {
         model.addAttribute(listTabOrFormTab, "active");
         model.addAttribute("showVolumesInfo", true);
         model.addAttribute("selectedFormOption", "Tomo");
-        model.addAttribute("volumeList", volumeService.getAllVolumes());
+        model.addAttribute("volumeList", volumeService.getAll());
     }
 }

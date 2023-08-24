@@ -3,7 +3,9 @@ package com.api.onepiece.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.api.onepiece.entity.AnimeChapter;
 import com.api.onepiece.entity.Arc;
+import com.api.onepiece.entity.MangaChapter;
 import com.api.onepiece.entity.Volume;
 import com.api.onepiece.error.CustomFieldValidationException;
 import com.api.onepiece.error.MyEntityNotFoundException;
@@ -11,23 +13,23 @@ import com.api.onepiece.repository.ArcRepository;
 import com.api.onepiece.util.UniqueKeyGenerator;
 
 @Service
-public class ArcServiceImpl implements ArcService{
+public class ArcServiceImpl implements GenericService<Arc> {
 
     @Autowired
     private ArcRepository arcRepository;
 
     @Override
-    public Iterable<Arc> getAllArcs(){
+    public Iterable<Arc> getAll(){
         return arcRepository.findAll();
     }
 
     @Override
-    public Arc getArcById(Long id) throws Exception {
+    public Arc getById(Long id) throws Exception {
         return arcRepository.findById(id).orElseThrow(() -> new MyEntityNotFoundException("Id no encontrado"));
     }
 
     @Override
-    public Arc createArc(Arc arc) throws Exception {
+    public Arc create(Arc arc) throws Exception {
         if(arcRepository.existsByName(arc.getName())){
             throw new CustomFieldValidationException("ya existe un arco con ese nombre", "name");
         } else if(arc.getSaga()==null) {
@@ -40,8 +42,8 @@ public class ArcServiceImpl implements ArcService{
     }
 
     @Override
-    public Arc updateArc(Arc fromArc) throws Exception {
-        Arc toArc = getArcById(fromArc.getId());
+    public Arc update(Arc fromArc) throws Exception {
+        Arc toArc = getById(fromArc.getId());
         if(!toArc.getUniqueKey().equals(fromArc.getUniqueKey()) && arcRepository.existsByUniqueKey(fromArc.getUniqueKey())){
             throw new CustomFieldValidationException("Ya Existe esa clave", "uniqueKey");
         } else if(!toArc.getName().equals(fromArc.getName())&&arcRepository.existsByName(fromArc.getName())){
@@ -59,11 +61,17 @@ public class ArcServiceImpl implements ArcService{
     }
 
     @Override
-    public void deleteArc(Long id) throws Exception {
+    public void delete(Long id) throws Exception {
         Arc deleteArc = arcRepository.findById(id).orElseThrow(() -> new MyEntityNotFoundException("Arco no encontrado"));
         deleteArc.setSaga(null);
         for(Volume volume:deleteArc.getVolumes()){
             volume.setArc(null);
+        }
+        for(AnimeChapter animeChapter:deleteArc.getAnimeChapters()){
+            animeChapter.setAnimeArc(null);
+        }
+        for(MangaChapter mangaChapter:deleteArc.getMangaChapters()){
+            mangaChapter.setMangaArc(null);
         }
         arcRepository.delete(deleteArc); 
     }

@@ -1,0 +1,27 @@
+<div class="table-responsive">
+	<table id="listOf" class="table table-bordered table-hover">
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col" class="col-lg-1">Clave</th>
+				<th scope="col">Nombre</th>
+				<th scope="col">Arco</th>
+				<th class="col-lg-1"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="animeChapter: ${animeChapterList}" th:class="${#strings.isEmpty(animeChapter.uniqueKey) or #strings.isEmpty(animeChapter.name) or #lists.isEmpty(animeChapter.animeArc)} ? 'missing-data-row' : ''">
+                <td th:text="${animeChapter.uniqueKey}"></td>
+                <td th:text="${animeChapter.name}"></td>
+                <td>
+                    <ul class="list-unstyled">
+                        <li th:each="arc: ${animeChapter.animeArc}" th:text="${arc.uniqueKey} +' - '+ ${arc.name}"></li>
+                    </ul>
+                </td>
+                <td>
+                    <a href="#" th:href="@{'/editAnimeChapter/' + ${animeChapter.id}}"><i class="fas fa-edit"></i></a> | 
+                    <a type="submit" th:href="@{'deleteAnimeChapter/' + ${animeChapter.id}}" onclick="return confirm('¿Estás seguro de que deseas eliminar este registro?')"><i class="fas fa-user-times"></i></a>
+                </td>
+            </tr>
+		</tbody>
+	</table>
+</div>

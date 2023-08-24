@@ -3,14 +3,15 @@
 		<thead class="thead-dark">
 			<tr>
 				<th scope="col" class="col-lg-1">Clave</th>
-				<th scope="col">Nombre</th>
-				<th scope="col">Saga</th>
-				<th scope="col">Tomos</th>
+				<th scope="col" class="col-lg-2">Nombre</th>
+				<th scope="col" class="col-lg-2">Saga</th>
+				<th scope="col" >Manga</th>
+				<th scope="col" >Anime</th>
 				<th class="col-lg-1"></th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr th:each="arc: ${arcList}" th:class="${#strings.isEmpty(arc.uniqueKey) or #strings.isEmpty(arc.name) or #lists.isEmpty(arc.saga)} ? 'missing-data-row' : ''">
+			<tr th:each="arc: ${arcList}" th:class="${#strings.isEmpty(arc.uniqueKey) or #strings.isEmpty(arc.name) or #lists.isEmpty(arc.saga) or #lists.isEmpty(arc.mangaChapters) or #lists.isEmpty(arc.animeChapters)} ? 'missing-data-row' : ''">
 				<td th:text="${arc.uniqueKey}"></td>
 				<td th:text="${arc.name}"></td>
 				<td>
@@ -20,7 +21,12 @@
 				</td>
 				<td>
 					<ul class="list-unstyled">
-						<li th:each="volumes: ${arc.volumes}" th:text="${volumes.uniqueKey} +' - '+ ${volumes.name}"></li>
+						<li th:each="mangaChapter: ${arc.mangaChapters}" th:text="${mangaChapter.volume.uniqueKey} + '| ' + ${mangaChapter.uniqueKey} + ' - ' + ${mangaChapter.name}"></li>
+					</ul>
+				</td>
+				<td>
+					<ul class="list-unstyled">
+						<li th:each="animeChapters: ${arc.animeChapters}" th:text="${animeChapters.uniqueKey} +' - '+ ${animeChapters.name}"></li>
 					</ul>
 				</td>
 				<td>

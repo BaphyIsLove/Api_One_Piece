@@ -4,13 +4,13 @@ import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
@@ -39,12 +39,15 @@ public class Volume {
     @NotBlank(message = "Dale un nombre al tomo")
     private String name;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(
         name = "volume_arc",
         joinColumns = @JoinColumn(name = "volume_id"),
         inverseJoinColumns = @JoinColumn(name ="arc_id")
     )
     private List<Arc> arc;
+
+    @OneToMany(mappedBy = "volume")
+    private List<MangaChapter> mangaChapters;
 
 }

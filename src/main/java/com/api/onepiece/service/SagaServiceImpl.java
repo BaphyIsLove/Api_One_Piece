@@ -11,23 +11,23 @@ import com.api.onepiece.repository.SagaRepository;
 import com.api.onepiece.util.UniqueKeyGenerator;
 
 @Service
-public class SagaServiceImpl implements SagaService{
+public class SagaServiceImpl implements GenericService<Saga> {
 
     @Autowired
     SagaRepository sagaRepository;
 
     @Override
-    public Iterable<Saga> getAllSagas() {
+    public Iterable<Saga> getAll() {
         return sagaRepository.findAll();
     }
 
     @Override
-    public Saga getSagaById(Long id) throws MyEntityNotFoundException {
+    public Saga getById(Long id) throws MyEntityNotFoundException {
         return sagaRepository.findById(id).orElseThrow(() -> new MyEntityNotFoundException("Saga no encontrada") );
     }
 
     @Override
-    public Saga createSaga(Saga saga) throws Exception {
+    public Saga create(Saga saga) throws Exception {
         if(sagaRepository.existsByName(saga.getName())){
             throw new CustomFieldValidationException("Ya existe una saga con ese nombre", "name");
         } else{
@@ -38,8 +38,8 @@ public class SagaServiceImpl implements SagaService{
     }
 
     @Override
-    public Saga updateSaga(Saga fromSaga) throws Exception {
-        Saga toSaga = getSagaById(fromSaga.getId());
+    public Saga update(Saga fromSaga) throws Exception {
+        Saga toSaga = getById(fromSaga.getId());
         if(!toSaga.getUniqueKey().equals(fromSaga.getUniqueKey()) && sagaRepository.existsByUniqueKey(fromSaga.getUniqueKey())){
             throw new CustomFieldValidationException("Ya Existe esa clave", "uniqueKey");
         } else if(!toSaga.getName().equals(fromSaga.getName())&&sagaRepository.existsByName(fromSaga.getName())){
@@ -56,7 +56,7 @@ public class SagaServiceImpl implements SagaService{
     }
 
     @Override
-    public void deleteSaga(Long id) throws MyEntityNotFoundException {
+    public void delete(Long id) throws MyEntityNotFoundException {
         Saga deleteSaga = sagaRepository.findById(id).orElseThrow(() -> new MyEntityNotFoundException("Saga no encontrada"));
         for (Arc arc : deleteSaga.getArcs()) {
             arc.setSaga(null);

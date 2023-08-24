@@ -13,7 +13,7 @@ import com.api.onepiece.entity.Saga;
 import com.api.onepiece.error.MyEntityNotFoundException;
 import com.api.onepiece.error.CustomFieldValidationException;
 import com.api.onepiece.repository.SagaRepository;
-import com.api.onepiece.service.SagaService;
+import com.api.onepiece.service.SagaServiceImpl;
 
 
 import jakarta.validation.Valid;
@@ -22,7 +22,7 @@ import jakarta.validation.Valid;
 public class SagaController {
 
     @Autowired
-    SagaService sagaService;
+    SagaServiceImpl sagaService;
 
     @Autowired
     SagaRepository sagaRepository;
@@ -43,7 +43,7 @@ public class SagaController {
             resetAttributesByValidationError(model);
         } else{
             try {
-                sagaService.createSaga(saga);
+                sagaService.create(saga);
                 model.addAttribute("sagaForm", new Saga());
                 model.addAttribute("listTab", "active");
                 prepareAttributesFormView(model);
@@ -58,7 +58,7 @@ public class SagaController {
                 resetAttributesByValidationError(model);
             }
         }
-        model.addAttribute("sagaList", sagaService.getAllSagas());
+        model.addAttribute("sagaList", sagaService.getAll());
 
         return "admin-pages/admin-page";
     }
@@ -66,7 +66,7 @@ public class SagaController {
     @GetMapping("/editSaga/{id}")
     public String editSaga(ModelMap model, @PathVariable(name="id")Long id) throws Exception{ 
         try {
-            Saga sagaToEdit = sagaService.getSagaById(id);
+            Saga sagaToEdit = sagaService.getById(id);
             model.addAttribute("sagaForm", sagaToEdit);
             model.addAttribute("editMode", true);
             model.addAttribute("formTab", "active");
@@ -85,14 +85,14 @@ public class SagaController {
                 model.addAttribute("editMode", true);
                 resetAttributesByValidationError(model);
             } else{
-                sagaService.updateSaga(saga);
+                sagaService.update(saga);
                 prepareAttributesFormView(model);
                 model.addAttribute("sagaForm", new Saga());
                 model.addAttribute("listTab", "active");
             }
         } catch (CustomFieldValidationException e) {
             result.rejectValue(e.getField(), null, e.getMessage());
-            model.addAttribute("sagaList", sagaService.getAllSagas());
+            model.addAttribute("sagaList", sagaService.getAll());
             model.addAttribute("sagaForm", saga);
             model.addAttribute("editMode", true);
             resetAttributesByValidationError(model);
@@ -104,7 +104,7 @@ public class SagaController {
     @GetMapping("/deleteSaga/{id}")
     public String deleteSaga(ModelMap model, @PathVariable(name = "id")Long id) throws Exception{
         try {
-            sagaService.deleteSaga(id);
+            sagaService.delete(id);
         } catch (MyEntityNotFoundException e) {
             throw e;
         }
@@ -117,7 +117,7 @@ public class SagaController {
     }
 
     protected void prepareAttributesFormView(ModelMap model){
-        model.addAttribute("sagaList", sagaService.getAllSagas());
+        model.addAttribute("sagaList", sagaService.getAll());
         model.addAttribute("selectedFormOption", "saga");
         model.addAttribute("showSagasInfo", true);
         

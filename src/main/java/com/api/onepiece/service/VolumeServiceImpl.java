@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.api.onepiece.entity.Arc;
+import com.api.onepiece.entity.MangaChapter;
 import com.api.onepiece.entity.Volume;
 import com.api.onepiece.error.CustomFieldValidationException;
 import com.api.onepiece.error.MyEntityNotFoundException;
@@ -12,24 +13,24 @@ import com.api.onepiece.repository.VolumeRepository;
 import com.api.onepiece.util.UniqueKeyGenerator;
 
 @Service
-public class VolumeServiceImpl implements VolumeService{
+public class VolumeServiceImpl implements GenericService<Volume> {
 
     @Autowired
     VolumeRepository volumeRepository;
 
     @Override
-    public Iterable<Volume> getAllVolumes() {
+    public Iterable<Volume> getAll() {
         return volumeRepository.findAll();
     }
 
     @Override
-    public Volume getVolumeById(Long id) throws Exception {
+    public Volume getById(Long id) throws Exception {
         Volume volume = volumeRepository.findById(id).orElseThrow(() -> new MyEntityNotFoundException("Tomo no encontrado"));
         return volume;
     }
 
     @Override
-    public Volume createVolume(Volume volume) throws Exception {
+    public Volume create(Volume volume) throws Exception {
         if(volumeRepository.existsByName(volume.getName())){
             throw new CustomFieldValidationException("El nombre del tomo ya existe", "name");
         } else if(volume.getArc()==null) {
@@ -46,8 +47,8 @@ public class VolumeServiceImpl implements VolumeService{
     }
 
     @Override
-public Volume updateVolume(Volume fromVolume) throws Exception {
-    Volume toVolume = getVolumeById(fromVolume.getId());
+public Volume update(Volume fromVolume) throws Exception {
+    Volume toVolume = getById(fromVolume.getId());
     
     if (!toVolume.getName().equals(fromVolume.getName()) && volumeRepository.existsByName(fromVolume.getName())) {
         throw new CustomFieldValidationException("El nombre ya existe", "name");
@@ -68,11 +69,14 @@ public Volume updateVolume(Volume fromVolume) throws Exception {
 }
 
     @Override
-    public void deleteVolume(Long id) throws Exception {
+    public void delete(Long id) throws Exception {
         Volume deleteVolume = volumeRepository.findById(id).orElseThrow(() ->
                         new MyEntityNotFoundException("Tomo no encontrado"));
         for (Arc arc : deleteVolume.getArc()) {
             arc.setSaga(null);
+        }
+        for(MangaChapter mangaChapter:deleteVolume.getMangaChapters()){
+            mangaChapter.setVolume(null);
         }
         volumeRepository.delete(deleteVolume);
     }

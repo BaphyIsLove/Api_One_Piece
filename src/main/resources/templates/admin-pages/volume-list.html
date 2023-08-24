@@ -5,6 +5,7 @@
 				<th scope="col" class="col-lg-1">Clave</th>
 				<th scope="col">Nombre</th>
 				<th scope="col">Arco</th>
+				<th scope="col">Capitulos</th>
 				<th class="col-lg-1"></th>
 			</tr>
 		</thead>
@@ -15,6 +16,11 @@
                 <td>
                     <ul class="list-unstyled">
                         <li th:each="arc: ${volume.arc}" th:text="${arc.uniqueKey} +' - '+ ${arc.name}"></li>
+                    </ul>
+                </td>
+                <td>
+                    <ul class="list-unstyled">
+                        <li th:each="mangaChapter: ${volume.mangaChapters}" th:text="${mangaChapter.uniqueKey} +' - '+ ${mangaChapter.name}" style="white-space: normal;"></li>
                     </ul>
                 </td>
                 <td>

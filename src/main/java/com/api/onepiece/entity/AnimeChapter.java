@@ -1,40 +1,36 @@
 package com.api.onepiece.entity;
 
-import java.util.List;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class Saga {
+public class AnimeChapter {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true)
-    @Pattern(regexp = "S-\\d{3}")
+    @Pattern(regexp = "A-\\d{4}")
     private String uniqueKey;
 
     @Column(unique = true)
-    @NotBlank(message = "Dale un nombre a la saga")
+    @NotBlank
     private String name;
 
-    @OneToMany(mappedBy = "saga")
-    private List<Arc> arcs;
+    @ManyToOne
+    @JoinColumn(name = "animeArc_id")
+    private Arc animeArc;
 
 }

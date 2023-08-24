@@ -3,13 +3,13 @@ package com.api.onepiece.entity;
 import java.util.List;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
@@ -38,11 +38,17 @@ public class Arc {
     @NotBlank(message = "Dale un nombre al arco")
     private String name;
 
-    @ManyToOne (fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "saga_id")
     private Saga saga;
 
-    @ManyToMany(mappedBy = "arc", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "arc")
     private List<Volume> volumes;
+
+    @OneToMany(mappedBy = "mangaArc")
+    private List<MangaChapter> mangaChapters;
+
+    @OneToMany(mappedBy = "animeArc")
+    private List<AnimeChapter> animeChapters;
 
 }

@@ -3,17 +3,14 @@
 <head>
 	<title>User Information and Form</title>
 
-	<!--JQUERY-->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
 	<!-- FRAMEWORK BOOTSTRAP para el estilo de la pagina-->
 	<link rel="stylesheet"
 		href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<script src="https://code.jquery.com/jquery-3.7.0.js"
+		integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+		crossorigin="anonymous"></script> <!-- Cargando la versión completa de jQuery -->
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-	<script 
-		src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script 
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 
@@ -42,7 +39,7 @@
 <body>
     <div class="d-flex">
         <!-- Barra lateral -->
-		<nav id="sidebar" class="bg-light">
+		<nav id="sidebar" class="bg-light sticky-top">
 			<div class="sidebar-header bg-dark">
 				<h3>Admin Panel</h3>
 			</div>
@@ -55,6 +52,12 @@
 				</li>
 				<li>
 					<a class="btn btn-outline-dark btn-block" th:href="@{/volumeForm}">Tomos</a>
+				</li>
+				<li>
+					<a class="btn btn-outline-dark btn-block" th:href="@{/mangaChapterForm}">Capitulos del manga</a>
+				</li>
+				<li>
+					<a class="btn btn-outline-dark btn-block" th:href="@{/animeChapterForm}">Capitulos del anime</a>
 				</li>
 			</ul>
 		</nav>

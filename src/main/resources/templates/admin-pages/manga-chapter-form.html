@@ -1,12 +1,12 @@
-<form class="form" role="form" autocomplete="off" th:object="${volumeForm}" th:action="${editMode} ?@{/editVolume} : @{/volumeForm}" method="post">
+<form class="form" role="form" autocomplete="off" th:object="${mangaChapterForm}" th:action="${editMode} ?@{/editMangaChapter} : @{/mangaChapterForm}" method="post">
 
-	<input class="form-control" type="hidden" th:id="${editMode}" th:field="${volumeForm.id}">
+	<input class="form-control" type="hidden" th:id="${editMode}" th:field="${mangaChapterForm.id}">
 
     <div id="hiddenField" class="collapse" th:if="${editMode}">
 		<div class="form-group row">
 			<label class="col-lg-3 col-form-label form-control-label">Clave</label>
 			<div class="col-lg-9">
-				<input class="form-control" type="text" th:field="${volumeForm.uniqueKey}">
+				<input class="form-control" type="text" th:field="${mangaChapterForm.uniqueKey}">
 				<div class="alert-danger" th:if="${#fields.hasErrors('uniqueKey')}" th:errors="*{uniqueKey}"></div>
 			</div>
 		</div>
@@ -14,22 +14,31 @@
     <div class="form-group row">
         <label class="col-lg-3 col-form-label form-control-label">Nombre</label>
         <div class="col-lg-9">
-            <input class="form-control" type="text" th:field="${volumeForm.name}">
+            <input class="form-control" type="text" th:field="${mangaChapterForm.name}">
 			<div class="alert-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
         </div>
     </div>
-    <div class="form-group row">
+	<div class="form-group row">
 		<label class="col-lg-3 col-form-label form-control-label">Arco</label>
 		<div class="col-lg-9">
-			<select th:field="${volumeForm.arc}" class="form-control" size="5" multiple required>
-				<option th:each="arc : ${arcs}" th:value="${arc.id}" th:text="${arc.name}"></option>
+			<select th:field="${mangaChapterForm.mangaArc}" class="form-control" size="10" multiple required>
+				<option th:each="arc : ${mangaArc}" th:value="${arc.id}" th:text="${arc.name}"></option>
 			</select>
-			<div class="alert-danger" th:if="${#fields.hasErrors('arc')}" th:errors="*{arc}"></div>
+			<div class="alert-danger" th:if="${#fields.hasErrors('mangaArc')}" th:errors="*{mangaArc}"></div>
+		</div>
+	</div>
+    <div class="form-group row">
+		<label class="col-lg-3 col-form-label form-control-label">Tomo</label>
+		<div class="col-lg-9">
+			<select th:field="${mangaChapterForm.volume}" class="form-control" size="5" multiple required>
+				<option th:each="volume : ${volume}" th:value="${volume.id}" th:text="${volume.name}"></option>
+			</select>
+			<div class="alert-danger" th:if="${#fields.hasErrors('volume')}" th:errors="*{volume}"></div>
 		</div>
 	</div>
 	<div class="form-group row">
 		<div class="col-lg-12 text-center">
-			<a class="btn btn-secondary col-lg-3" th:href="@{/volumeForm/cancel}">Cancelar</a>
+			<a class="btn btn-secondary col-lg-3" th:href="@{/mangaChapterForm/cancel}">Cancelar</a>
 			<button th:if="${editMode}" type="button" class="btn btn-primary col-lg-3" data-toggle="collapse" data-target="#hiddenField">Cambiar Clave</button>
 			<input type="submit" class="btn btn-primary col-lg-3" value="Guardar" th:value="${editMode}?'Guardar Cambios':'Crear'">
 		</div>
@@ -37,6 +46,7 @@
 	<div class="alert-danger text-center" th:if="${formErrorMessage}" th:text="${formErrorMessage}">Error Message</div>
 	
 </form>
+
 <script>
     $(document).ready(function() {
         $('select[multiple="multiple"] option').click(function() {
