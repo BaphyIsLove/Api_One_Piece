@@ -9,7 +9,7 @@ import com.api.onepiece.entity.MangaChapter;
 
 public interface MangaChapterRepository extends JpaRepository<MangaChapter, Long>{
     
-    @Query("SELECT MAX(SUBSTRING(m.uniqueKey, 3)) FROM MangaChapter m WHERE SUBSTRING(m.uniqueKey, 1, 1) = :prefix")
+    @Query("SELECT MAX(SUBSTRING(m.uniqueKey, 4)) FROM MangaChapter m WHERE SUBSTRING(m.uniqueKey, 1, 2) = :prefix")
     public Long findMaxNumberByPrefix(String prefix);
 
     public Optional<MangaChapter> findByName(String name) throws Exception;

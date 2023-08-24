@@ -32,8 +32,8 @@ public class AnimeChapterServiceImpl implements GenericService<AnimeChapter> {
         } else if(animeChapter.getAnimeArc()==null){
             throw new CustomFieldValidationException("Selecciona un arco", "arc");
         } else {
-            Long lastNum = animeChapterRepository.findMaxNumberByPrefix("A");
-            animeChapter.setUniqueKey(UniqueKeyGenerator.generateChapterUniqueKey("A", lastNum));
+            Long lastNum = animeChapterRepository.findMaxNumberByPrefix("AC");
+            animeChapter.setUniqueKey(UniqueKeyGenerator.generateChapterUniqueKey("AC", lastNum));
             return animeChapterRepository.save(animeChapter);
         }
     }
@@ -50,6 +50,7 @@ public class AnimeChapterServiceImpl implements GenericService<AnimeChapter> {
         } else {
             animeChapterToEdit.setName(animeChapter.getName());
             animeChapterToEdit.setUniqueKey(animeChapter.getUniqueKey());
+            animeChapterToEdit.setFillerChapter(animeChapter.isFillerChapter());
             animeChapterToEdit.setAnimeArc(animeChapter.getAnimeArc());
             return animeChapterRepository.save(animeChapterToEdit);
         }

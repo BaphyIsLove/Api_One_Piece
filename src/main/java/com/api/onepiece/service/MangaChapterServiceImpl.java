@@ -32,8 +32,8 @@ public class MangaChapterServiceImpl implements GenericService<MangaChapter> {
         } else if(mangaChapter.getVolume()==null){
             throw new CustomFieldValidationException("Selecciona un tomo", "volume");
         } else {
-            Long lastNum = mangaChapterRepository.findMaxNumberByPrefix("M");
-            mangaChapter.setUniqueKey(UniqueKeyGenerator.generateChapterUniqueKey("M", lastNum));
+            Long lastNum = mangaChapterRepository.findMaxNumberByPrefix("MC");
+            mangaChapter.setUniqueKey(UniqueKeyGenerator.generateChapterUniqueKey("MC", lastNum));
             return mangaChapterRepository.save(mangaChapter);
         }
     }

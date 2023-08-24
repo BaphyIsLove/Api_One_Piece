@@ -7,9 +7,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -38,14 +35,6 @@ public class Volume {
     @Column(unique = true)
     @NotBlank(message = "Dale un nombre al tomo")
     private String name;
-
-    @ManyToMany
-    @JoinTable(
-        name = "volume_arc",
-        joinColumns = @JoinColumn(name = "volume_id"),
-        inverseJoinColumns = @JoinColumn(name ="arc_id")
-    )
-    private List<Arc> arc;
 
     @OneToMany(mappedBy = "volume")
     private List<MangaChapter> mangaChapters;

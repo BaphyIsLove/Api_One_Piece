@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import com.api.onepiece.entity.AnimeChapter;
 import com.api.onepiece.entity.Arc;
 import com.api.onepiece.entity.MangaChapter;
-import com.api.onepiece.entity.Volume;
 import com.api.onepiece.error.CustomFieldValidationException;
 import com.api.onepiece.error.MyEntityNotFoundException;
 import com.api.onepiece.repository.ArcRepository;
@@ -58,15 +57,13 @@ public class ArcServiceImpl implements GenericService<Arc> {
         to.setUniqueKey(from.getUniqueKey());
         to.setName(from.getName());
         to.setSaga(from.getSaga());
+        to.setFillerArc(from.getFillerArc());
     }
 
     @Override
     public void delete(Long id) throws Exception {
         Arc deleteArc = arcRepository.findById(id).orElseThrow(() -> new MyEntityNotFoundException("Arco no encontrado"));
         deleteArc.setSaga(null);
-        for(Volume volume:deleteArc.getVolumes()){
-            volume.setArc(null);
-        }
         for(AnimeChapter animeChapter:deleteArc.getAnimeChapters()){
             animeChapter.setAnimeArc(null);
         }

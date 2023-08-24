@@ -22,7 +22,7 @@
 		<label class="col-lg-3 col-form-label form-control-label">Arco</label>
 		<div class="col-lg-9">
 			<select th:field="${mangaChapterForm.mangaArc}" class="form-control" size="10" multiple required>
-				<option th:each="arc : ${mangaArc}" th:value="${arc.id}" th:text="${arc.name}"></option>
+				<option th:if="${!arc.fillerArc}" th:each="arc : ${mangaArc}" th:value="${arc.id}" th:text="${arc.name}"></option>
 			</select>
 			<div class="alert-danger" th:if="${#fields.hasErrors('mangaArc')}" th:errors="*{mangaArc}"></div>
 		</div>

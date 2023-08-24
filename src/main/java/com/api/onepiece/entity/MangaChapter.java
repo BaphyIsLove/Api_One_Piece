@@ -26,7 +26,7 @@ public class MangaChapter {
     private Long id;
 
     @Column(unique = true)
-    @Pattern(regexp = "M-\\d{4}")
+    @Pattern(regexp = "MC-\\d{4}")
     private String uniqueKey;
 
     @Column(unique = true)

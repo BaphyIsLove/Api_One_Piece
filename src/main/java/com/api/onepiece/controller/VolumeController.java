@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.api.onepiece.entity.Volume;
 import com.api.onepiece.error.CustomFieldValidationException;
 import com.api.onepiece.error.MyEntityNotFoundException;
-import com.api.onepiece.repository.ArcRepository;
 import com.api.onepiece.service.VolumeServiceImpl;
 
 import jakarta.validation.Valid;
@@ -22,13 +21,11 @@ public class VolumeController {
     
     @Autowired
     VolumeServiceImpl volumeService;
-    @Autowired
-    ArcRepository arcRepository;
+    
 
     @GetMapping("/volumeForm")
     public String volumeForm(ModelMap model) throws Exception{
         model.addAttribute("volumeForm", new Volume());
-        model.addAttribute("arcs", arcRepository.findAll());
         prepareAttributesFormView(model, "listTab");
         return "admin-pages/admin-page";
     }
@@ -37,23 +34,19 @@ public class VolumeController {
     public String createVolume(@Valid @ModelAttribute("volumeForm")Volume volume, BindingResult result, ModelMap model){
         if(result.hasErrors()){
             prepareAttributesFormView(model, "formTab");
-            model.addAttribute("arcs", arcRepository.findAll());
             model.addAttribute("volumeForm", volume);
         } else{
             try {
                 volumeService.create(volume);
                 prepareAttributesFormView(model, "listTab");
                 model.addAttribute("volumeForm", new Volume());
-                model.addAttribute("arcs", arcRepository.findAll());
             } catch (CustomFieldValidationException e) {
                 result.rejectValue(e.getField(), null, e.getMessage());
                 prepareAttributesFormView(model, "formTab");
                 model.addAttribute("volumeForm", volume);
-                model.addAttribute("arcs", arcRepository.findAll());
             } catch(Exception e){
                 prepareAttributesFormView(model, "formTab");
                 model.addAttribute("formErrorMessage", e.getMessage());
-                model.addAttribute("arcs", arcRepository.findAll());
             }
         }
 
@@ -66,7 +59,6 @@ public class VolumeController {
             Volume volumeToEdit = volumeService.getById(id);
             prepareAttributesFormView(model, "formTab");
             model.addAttribute("volumeForm", volumeToEdit);
-            model.addAttribute("arcs", arcRepository.findAll());
             model.addAttribute("editMode", true);
         } catch (MyEntityNotFoundException e) {
             throw e;
@@ -80,19 +72,16 @@ public class VolumeController {
             if(result.hasErrors()){
                 model.addAttribute("volumeForm", volume);
                 model.addAttribute("editMode", true);
-                model.addAttribute("arcs", arcRepository.findAll());
                 prepareAttributesFormView(model, "formTab");
             }else{
                 volumeService.update(volume);
                 prepareAttributesFormView(model, "listTab");
                 model.addAttribute("volumeForm", new Volume());
-                model.addAttribute("arcs", arcRepository.findAll());
             }
         } catch (CustomFieldValidationException e) {
             result.reject(e.getField(),null, e.getMessage());
             prepareAttributesFormView(model, "formTab");
             model.addAttribute("volumeForm", volume);
-            model.addAttribute("arcs", arcRepository.findAll());
             model.addAttribute("editMode", true);
         }
 

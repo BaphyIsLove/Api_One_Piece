@@ -11,9 +11,9 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr th:each="arc: ${arcList}" th:class="${#strings.isEmpty(arc.uniqueKey) or #strings.isEmpty(arc.name) or #lists.isEmpty(arc.saga) or #lists.isEmpty(arc.mangaChapters) or #lists.isEmpty(arc.animeChapters)} ? 'missing-data-row' : ''">
+			<tr th:each="arc: ${arcList}" th:class="${#strings.isEmpty(arc.uniqueKey) or #strings.isEmpty(arc.name) or #lists.isEmpty(arc.saga) or (#lists.isEmpty(arc.mangaChapters) and (!arc.fillerArc)) or #lists.isEmpty(arc.animeChapters)} ? 'missing-data-row' : ''">
 				<td th:text="${arc.uniqueKey}"></td>
-				<td th:text="${arc.name}"></td>
+				<td th:text="${arc.name + (arc.fillerArc ? ' / relleno' : '')}"></td>
 				<td>
 					<ul class="list-unstyled">
 						<li th:each="saga: ${arc.saga}" th:text="${saga.uniqueKey} +' - '+ ${saga.name}"></li>
@@ -21,12 +21,13 @@
 				</td>
 				<td>
 					<ul class="list-unstyled">
-						<li th:each="mangaChapter: ${arc.mangaChapters}" th:text="${mangaChapter.volume.uniqueKey} + '| ' + ${mangaChapter.uniqueKey} + ' - ' + ${mangaChapter.name}"></li>
+						<li th:if="${arc.fillerArc}">Arco de relleno - No aplica</li>
+						<li th:if="${!arc.fillerArc}" th:each="mangaChapter : ${arc.mangaChapters}" th:text="${mangaChapter.volume.uniqueKey + ' | ' + mangaChapter.uniqueKey + ' - ' + mangaChapter.name}"></li>
 					</ul>
 				</td>
 				<td>
 					<ul class="list-unstyled">
-						<li th:each="animeChapters: ${arc.animeChapters}" th:text="${animeChapters.uniqueKey} +' - '+ ${animeChapters.name}"></li>
+						<li th:each="animeChapters: ${arc.animeChapters}" th:text="${animeChapters.uniqueKey} +' - '+ ${animeChapters.name} + ' ' + ${animeChapters.fillerChapter ? ' / relleno' : ''}" ></li>
 					</ul>
 				</td>
 				<td>

@@ -22,12 +22,15 @@ public class AnimeChapter {
     private Long id;
 
     @Column(unique = true)
-    @Pattern(regexp = "A-\\d{4}")
+    @Pattern(regexp = "AC-\\d{4}")
     private String uniqueKey;
 
     @Column(unique = true)
     @NotBlank
     private String name;
+
+    @Column
+    private boolean fillerChapter;
 
     @ManyToOne
     @JoinColumn(name = "animeArc_id")

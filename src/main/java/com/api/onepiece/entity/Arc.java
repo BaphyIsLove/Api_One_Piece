@@ -7,7 +7,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
@@ -38,12 +37,12 @@ public class Arc {
     @NotBlank(message = "Dale un nombre al arco")
     private String name;
 
+    @Column
+    private Boolean fillerArc;
+
     @ManyToOne
     @JoinColumn(name = "saga_id")
     private Saga saga;
-
-    @ManyToMany(mappedBy = "arc")
-    private List<Volume> volumes;
 
     @OneToMany(mappedBy = "mangaArc")
     private List<MangaChapter> mangaChapters;

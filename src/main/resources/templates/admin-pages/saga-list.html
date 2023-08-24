@@ -14,7 +14,9 @@
                 <td th:text="${saga.name}"></td>
                 <td>
                     <ul class="list-unstyled">
-                        <li th:each="arc: ${saga.arcs}" th:text="${arc.uniqueKey} +' - '+ ${arc.name}" style="white-space: normal;"></li>
+                        <li th:each="arc: ${saga.arcs}" >
+                            <span th:text="${arc.uniqueKey + ' - ' + arc.name + (arc.fillerArc ? ' / relleno' : '')}"></span>
+                        </li>
                     </ul>
                 </td>
                 <td>
