@@ -12,7 +12,7 @@
                 <td th:text="${organizationz.name}"></td>
                 <td>
 					<ul class="list-unstyled">
-						<li th:each="member: ${organizationz.members}" th:text="${member.name}"></li>
+						<li th:each="member: ${organizationz.members}" th:text="${member.name} + ' - ' + ${member.organizationzRoles.name}"></li>
 					</ul>
 				</td>
                 <td>

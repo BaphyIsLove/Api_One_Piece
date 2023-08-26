@@ -3,12 +3,18 @@
         <thead class="thead-dark">
             <tr>
                 <th scope="col">Nombre</th>
+                <th scope="col">Personajes</th>
                 <th class="col-lg-1"></th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="occupation: ${occupationList}">
                 <td th:text="${occupation.name}"></td>
+                <td>
+					<ul class="list-unstyled">
+						<li th:each="character: ${occupation.characters}" th:text="${character.name}"></li>
+					</ul>
+				</td>
                 <td>
                     <a href="#" th:href="@{'/editOccupation/' + ${occupation.id}}"><i class="fas fa-edit"></i></a> | 
                     <a type="submit" th:href="@{'deleteOccupation/' + ${occupation.id}}" onclick="return confirm('¿Estás seguro de que deseas eliminar este registro? Esta acción no se puede deshacer y podria alterar todos los registros.')"><i class="fas fa-user-times"></i></a>
