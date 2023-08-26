@@ -1,0 +1,25 @@
+<div class="table-responsive">
+	<table id="listOf" class="table table-bordered table-hover">
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col" class="col-lg-2">Nombre</th>
+				<th scope="col" class="col-lg-2">Personajes con este rol</th>
+				<th class="col-lg-1"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="role: ${roleList}" th:class="${#strings.isEmpty(role.name)} ? 'missing-data-row' : ''">
+				<td th:text="${role.name}"></td>
+				<td>
+					<ul class="list-unstyled">
+						<li th:each="characters: ${role.characters}" th:text="${characters.name} +' - '+ ${characters.crew.name}"></li>
+					</ul>
+				</td>
+				<td>
+					<a href="#" th:href="@{'/editRole/' + ${role.id}}"><i class="fas fa-edit"></i></a> | 
+					<a type="submit" th:href="@{'deleteRole/' + ${role.id}}" onclick="return confirm('¿Estás seguro de que deseas eliminar este registro?')"><i class="fas fa-user-times"></i></a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

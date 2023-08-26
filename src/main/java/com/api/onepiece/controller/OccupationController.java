@@ -112,7 +112,7 @@ public class OccupationController {
     private void prepareAttributesFormView(ModelMap model, String listTabOrFormTab){
         model.addAttribute(listTabOrFormTab, "active");
         model.addAttribute("showOccupationInfo", true);
-        model.addAttribute("selectedFormOption", "Ocuparión/Trabajo");
+        model.addAttribute("selectedFormOption", "Ocupación/Trabajo");
         model.addAttribute("occupationList", occupationService.getAll());
     }
 

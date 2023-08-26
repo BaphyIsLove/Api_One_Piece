@@ -37,13 +37,23 @@
 		</div>
 	</div>
     <div class="form-group row">
-		<label class="col-lg-3 col-form-label form-control-label">Agrupación</label>
+		<label class="col-lg-3 col-form-label form-control-label">Tripulación o grupo</label>
 		<div class="col-lg-9">
 			<select th:field="${characterForm.crew}" class="form-control">
 				<option value="" selected>Selecciona una agrupación</option>
 				<option th:each="crew : ${crew}" th:value="${crew.id}" th:text="${crew.name}" th:order-by="${crew.name}"></option>
 			</select>
 			<div class="alert-danger" th:if="${#fields.hasErrors('crew')}" th:errors="*{crew}"></div>
+		</div>
+	</div>
+    <div class="form-group row">
+		<label class="col-lg-3 col-form-label form-control-label">Rol</label>
+		<div class="col-lg-9">
+			<select th:field="${characterForm.role}" class="form-control">
+				<option value="" selected>Selecciona el rol en la tripulación</option>
+				<option th:each="role : ${role}" th:value="${role.id}" th:text="${role.name}" th:order-by="${role.name}"></option>
+			</select>
+			<div class="alert-danger" th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></div>
 		</div>
 	</div>
     <div class="form-group row">

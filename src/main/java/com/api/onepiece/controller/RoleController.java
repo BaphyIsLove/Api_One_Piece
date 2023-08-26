@@ -9,57 +9,61 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.api.onepiece.entity.Crew;
+import com.api.onepiece.entity.Role;
 import com.api.onepiece.error.CustomFieldValidationException;
 import com.api.onepiece.error.MyEntityNotFoundException;
-import com.api.onepiece.repository.CrewRepository;
-import com.api.onepiece.service.CrewService;
+import com.api.onepiece.repository.CharacterEntityRepository;
+import com.api.onepiece.repository.RoleRepository;
+import com.api.onepiece.service.RoleService;
 
 import jakarta.validation.Valid;
 
 @Controller
-public class CrewController {
+public class RoleController {
+    
+    @Autowired
+    RoleRepository roleRepository;
+    @Autowired
+    RoleService roleService;
 
     @Autowired
-    CrewRepository crewRepository;
-    @Autowired
-    CrewService crewService;
-
-    @GetMapping("/crewForm")
-    public String crewForm(ModelMap model){
-        model.addAttribute("crewForm", new Crew());
+    CharacterEntityRepository characterRepository;
+    
+    @GetMapping("/roleForm")
+    public String roleForm(ModelMap model){
+        model.addAttribute("roleForm", new Role());
         prepareAttributesFormView(model, "listTab");
         return "admin-pages/admin-page";
     }
 
-    @PostMapping("/crewForm")
-    public String postCrewForm(@Valid @ModelAttribute("crewForm")Crew crew, BindingResult result ,ModelMap model){
+    @PostMapping("/roleForm")
+    public String postRoleForm(@Valid @ModelAttribute("roleForm")Role role, BindingResult result ,ModelMap model){
         if(result.hasErrors()){
-            model.addAttribute("crewForm", crew);
+            model.addAttribute("roleForm", role);
             prepareAttributesFormView(model, "formTab");
         } else{
             try {
-                crewService.create(crew);
-                model.addAttribute("crewForm", new Crew());
+                roleService.create(role);
+                model.addAttribute("roleForm", new Role());
                 prepareAttributesFormView(model, "listTab");
             } catch (CustomFieldValidationException e) {
                 result.reject(e.getField(), null, e.getMessage());
-                model.addAttribute("crewForm", crew);
+                model.addAttribute("roleForm", role);
                 prepareAttributesFormView(model, "formTab");
             } catch(Exception e){
                 model.addAttribute("formErrorMessage", e.getMessage());
-                model.addAttribute("crewForm", crew);
+                model.addAttribute("roleForm", role);
                 prepareAttributesFormView(model, "formTab");
             }
         }
         return "admin-pages/admin-page";
     }
 
-    @GetMapping("/editCrew/{id}")
-    public String crewEdit(@PathVariable(name = "id")Long id, ModelMap model) throws Exception{
+    @GetMapping("/editRole/{id}")
+    public String roleEdit(@PathVariable(name = "id")Long id, ModelMap model) throws Exception{
         try {
-            Crew crewToEdit = crewService.getById(id);
-            model.addAttribute("crewForm", crewToEdit);
+            Role roleToEdit = roleService.getById(id);
+            model.addAttribute("roleForm", roleToEdit);
             model.addAttribute("editMode", true);
             prepareAttributesFormView(model, "formTab");
         } catch (MyEntityNotFoundException e) {
@@ -68,47 +72,48 @@ public class CrewController {
         return "admin-pages/admin-page";
     }
 
-    @PostMapping("/editCrew")
-    public String postCrewEdit(@Valid @ModelAttribute("crewForm")Crew crew, BindingResult result, ModelMap model) throws Exception{
+    @PostMapping("/editRole")
+    public String postRoleEdit(@Valid @ModelAttribute("roleForm")Role role, BindingResult result, ModelMap model) throws Exception{
         if(result.hasErrors()){
-            model.addAttribute("crewForm", crew);
+            model.addAttribute("roleForm", role);
             model.addAttribute("editMode", true);
             prepareAttributesFormView(model, "formTab");
         } else{
             try {
-                crewService.update(crew);
-                model.addAttribute("crewForm", new Crew());
+                roleService.update(role);
+                model.addAttribute("roleForm", new Role());
                 prepareAttributesFormView(model, "listTab");
             } catch (CustomFieldValidationException e) {
                 result.reject(e.getField(), null, e.getMessage());
                 model.addAttribute("editMode", true);
-                model.addAttribute("crewForm", crew);
+                model.addAttribute("roleForm", role);
                 prepareAttributesFormView(model, "formTab");
             }
         }
         return "admin-pages/admin-page";
     }
 
-    @GetMapping("/deleteCrew/{id}")
-    public String deleteCrew(@PathVariable(name = "id")Long id, ModelMap model) throws Exception{
+    @GetMapping("/deleteRole/{id}")
+    public String deleteRole(@PathVariable(name = "id")Long id, ModelMap model) throws Exception{
         try {
-            crewService.delete(id);
+            roleService.delete(id);
         } catch (MyEntityNotFoundException e) {
             throw e;
         }
-        return "redirect:/crewForm";
+        return "redirect:/roleForm";
     }
 
-    @GetMapping("/crewForm/cancel")
+    @GetMapping("/roleForm/cancel")
     public String cancelBtn(){
-        return "redirect:/crewForm";
+        return "redirect:/roleForm";
     }
 
     private void prepareAttributesFormView(ModelMap model, String listTabOrFormTab){
         model.addAttribute(listTabOrFormTab, "active");
-        model.addAttribute("showCrewInfo", true);
-        model.addAttribute("selectedFormOption", "Tripulacion/Equipo");
-        model.addAttribute("crewList", crewService.getAll());
+        model.addAttribute("showRoleInfo", true);
+        model.addAttribute("selectedFormOption", "Rol");
+        model.addAttribute("roleList", roleService.getAll());
+        model.addAttribute("character", characterRepository.findAll());
     }
-    
+
 }

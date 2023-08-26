@@ -51,6 +51,7 @@ public class CharacterEntityService implements GenericService<CharacterEntity>{
         to.setOccupation(from.getOccupation());
         to.setBounty(from.getBounty());
         to.setCrew(from.getCrew());
+        to.setRole(from.getRole());
         to.setAge(from.getAge());
         to.setSize(from.getSize());
         to.setBirthdate(from.getBirthdate());

@@ -42,6 +42,10 @@ public class CharacterEntity {
     @JoinColumn(name = "crew_id")
     private Crew crew;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id")
+    private Role role;
+
     @Column
     private String age;
     
