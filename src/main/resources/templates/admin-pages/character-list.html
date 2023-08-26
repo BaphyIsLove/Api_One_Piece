@@ -16,8 +16,10 @@
                     <ul class="list-unstyled">
                         <li th:each="occupation: ${character.occupation}" th:text="${'Ocupacion: ' + occupation.name}"></li>
                         <li th:text="${'Recompenza : ' + character.bounty}"></li>
+                        <li th:each="organizationz: ${character.organizationz}" th:text="${'Afiliado a: ' + organizationz.name}"></li>
+                        <li th:each="role: ${character.organizationzRoles}" th:text="${'Posición: ' + role.name}"></li>
                         <li th:each="crew: ${character.crew}" th:text="${'Tripulación: ' + crew.name}"></li>
-                        <li th:each="role: ${character.role}" th:text="${'Rol: ' + role.name}"></li>
+                        <li th:each="role: ${character.crewRoles}" th:text="${'Rol: ' + role.name}"></li>
                     </ul>
                 </td>
                 <td>

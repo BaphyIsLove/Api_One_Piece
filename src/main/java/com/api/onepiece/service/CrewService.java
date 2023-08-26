@@ -16,7 +16,12 @@ public class CrewService implements GenericService<Crew>{
 
     @Override
     public Iterable<Crew> getAll() {
-        return crewRepository.findAll();
+        Iterable<Crew> allCrews = crewRepository.findAll();
+        for(Crew crew:allCrews){
+            crew.setCrewBounty();
+            crewRepository.save(crew);
+        }
+        return allCrews;
     }
 
     @Override

@@ -17,10 +17,10 @@ import com.api.onepiece.repository.CharacterEntityRepository;
 import com.api.onepiece.repository.CrewRepository;
 import com.api.onepiece.repository.MangaChapterRepository;
 import com.api.onepiece.repository.OccupationRepository;
+import com.api.onepiece.repository.OrganizationzRepository;
 import com.api.onepiece.repository.RaceRepository;
 import com.api.onepiece.repository.RoleRepository;
 import com.api.onepiece.service.CharacterEntityService;
-
 import jakarta.validation.Valid;
 
 @Controller
@@ -40,6 +40,8 @@ public class CharacterEntityController {
     AnimeChapterRepository animeRepository;
     @Autowired
     RoleRepository roleRepository;
+    @Autowired
+    OrganizationzRepository organizationzRepository;
 
     @Autowired
     CharacterEntityService characterService;
@@ -135,8 +137,9 @@ public class CharacterEntityController {
         model.addAttribute("characterList", characterService.getAll());
         model.addAttribute("occupation", occupationRepository.findAll());
         model.addAttribute("crew", crewRepository.findAll());
-        model.addAttribute("role", roleRepository.findAll());
+        model.addAttribute("roles", roleRepository.findAll());
         model.addAttribute("race", raceRepository.findAll());
+        model.addAttribute("organizationz", organizationzRepository.findAll());
         model.addAttribute("firstApparitionAnime", animeRepository.findAll());
         model.addAttribute("firstApparitionManga", mangaRepository.findAll());
     }

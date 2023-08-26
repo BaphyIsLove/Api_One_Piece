@@ -13,6 +13,7 @@
 				<td>
 					<ul class="list-unstyled">
 						<li th:each="characters: ${role.characters}" th:text="${characters.name} +' - '+ ${characters.crew.name}"></li>
+						<li th:each="members: ${role.members}" th:text="${members.name} +' - '+ ${members.organizationz.name}"></li>
 					</ul>
 				</td>
 				<td>

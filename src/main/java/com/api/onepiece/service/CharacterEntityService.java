@@ -7,12 +7,15 @@ import com.api.onepiece.entity.CharacterEntity;
 import com.api.onepiece.error.CustomFieldValidationException;
 import com.api.onepiece.error.MyEntityNotFoundException;
 import com.api.onepiece.repository.CharacterEntityRepository;
+import com.api.onepiece.repository.CrewRepository;
 
 @Service
 public class CharacterEntityService implements GenericService<CharacterEntity>{
 
     @Autowired
     CharacterEntityRepository characterRepository;
+    @Autowired
+    CrewRepository crewRepository;
 
     @Override
     public Iterable<CharacterEntity> getAll() {
@@ -50,13 +53,15 @@ public class CharacterEntityService implements GenericService<CharacterEntity>{
         to.setRace(from.getRace());
         to.setOccupation(from.getOccupation());
         to.setBounty(from.getBounty());
+        to.setOrganizationzRoles(from.getOrganizationzRoles());
         to.setCrew(from.getCrew());
-        to.setRole(from.getRole());
+        to.setCrewRoles(from.getCrewRoles());
         to.setAge(from.getAge());
         to.setSize(from.getSize());
         to.setBirthdate(from.getBirthdate());
         to.setFirstApparitionManga(from.getFirstApparitionManga());
         to.setFirstApparitionAnime(from.getFirstApparitionAnime());
+        to.setOrganizationz(from.getOrganizationz());
     }
 
     @Override

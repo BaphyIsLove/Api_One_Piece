@@ -39,12 +39,20 @@ public class CharacterEntity {
     private Long bounty;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "crew_id")
-    private Crew crew;
+    @JoinColumn(name = "_id")
+    private Organizationz organizationz;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "organizationzRoles_id")
+    private Role organizationzRoles;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_id")
-    private Role role;
+    @JoinColumn(name = "crew_id")
+    private Crew crew;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "crewRoles_id")
+    private Role crewRoles;
 
     @Column
     private String age;

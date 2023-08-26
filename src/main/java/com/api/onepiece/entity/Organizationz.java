@@ -17,19 +17,16 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Role {
+public class Organizationz {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "crewRoles", fetch = FetchType.LAZY)
-    private List<CharacterEntity> characters;
-    
-    @OneToMany(mappedBy = "organizationzRoles", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "organizationz", fetch = FetchType.LAZY)
     private List<CharacterEntity> members;
 
 }
