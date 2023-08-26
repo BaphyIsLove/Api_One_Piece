@@ -34,8 +34,9 @@
     <div class="form-group row">
 		<label class="col-lg-3 col-form-label form-control-label">Sagas</label>
 		<div class="col-lg-9">
-			<select th:field="${arcForm.saga}" class="form-control" size="5">
-				<option th:each="saga : ${sagas}" th:value="${saga.id}" th:text="${saga.name}"></option>
+			<select th:field="${arcForm.saga}" class="form-control" >
+				<option value="" selected>Selecciona una saga</option>
+				<option th:each="saga : ${sagas}" th:value="${saga.id}" th:text="${saga.uniqueKey} + ' - ' + ${saga.name}"></option>
 			</select>
 			<div class="alert-danger" th:if="${#fields.hasErrors('saga')}" th:errors="*{saga}"></div>
 		</div>

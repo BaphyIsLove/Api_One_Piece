@@ -1,0 +1,45 @@
+<div class="table-responsive">
+	<table id="listOf" class="table table-bordered table-hover">
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col">Nombre</th>
+				<th scope="col">Información Básica</th>
+				<th scope="col">Información Personal</th>
+				<th scope="col">Primera Aparicion</th>
+				<th class="col-lg-1"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="character: ${characterList}" th:class="${#strings.isEmpty(character.name)} ? 'missing-data-row' : ''">
+                <td th:text="${character.name}"></td>
+                <td>
+                    <ul class="list-unstyled">
+                        <li th:each="occupation: ${character.occupation}" th:text="${'Ocupacion: ' + occupation.name}"></li>
+                        <li th:text="${'Recompenza : ' + character.bounty}"></li>
+                        <li th:each="crew: ${character.crew}" th:text="${'Afiliación: ' + crew.name}"></li>
+                    </ul>
+                </td>
+                <td>
+                    <ul class="list-unstyled">
+                        <li th:each="race: ${character.race}" th:text="${'raza: ' + race.name}"></li>
+                        <li th:text="${'Edad: ' + character.age}"></li>
+                        <li th:text="${'Cumpleaños: ' + character.birthdate}"></li>
+                        <li th:text="${'Altura: ' + character.size} + ' cm'"></li>
+                    </ul>
+                </td>
+                <td>
+                    <ul class="list-unstyled">
+                        <li th:each="firstApparitionManga: ${character.firstApparitionManga}" 
+                            th:text="${'manga | ' + firstApparitionManga.uniqueKey + ' - ' + firstApparitionManga.name}"></li>
+                        <li th:each="firstApparitionAnime: ${character.firstApparitionAnime}" 
+                            th:text="${'anime | ' + firstApparitionAnime.uniqueKey + ' - ' + firstApparitionAnime.name}"></li>
+                    </ul>
+                </td>
+                <td>
+                    <a href="#" th:href="@{'/editCharacter/' + ${character.id}}"><i class="fas fa-edit"></i></a> | 
+                    <a type="submit" th:href="@{'deleteCharacter/' + ${character.id}}" onclick="return confirm('¿Estás seguro de que deseas eliminar este registro?')"><i class="fas fa-user-times"></i></a>
+                </td>
+            </tr>
+		</tbody>
+	</table>
+</div>

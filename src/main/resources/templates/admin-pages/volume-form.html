@@ -28,10 +28,3 @@
 	<div class="alert-danger text-center" th:if="${formErrorMessage}" th:text="${formErrorMessage}">Error Message</div>
 	
 </form>
-<script>
-    $(document).ready(function() {
-        $('select[multiple="multiple"] option').click(function() {
-            $(this).prop('selected', !$(this).prop('selected'));
-        });
-    });
-</script>

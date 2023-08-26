@@ -21,8 +21,9 @@
 	<div class="form-group row">
 		<label class="col-lg-3 col-form-label form-control-label">Arco</label>
 		<div class="col-lg-9">
-			<select th:field="${mangaChapterForm.mangaArc}" class="form-control" size="10" multiple required>
-				<option th:if="${!arc.fillerArc}" th:each="arc : ${mangaArc}" th:value="${arc.id}" th:text="${arc.name}"></option>
+			<select th:field="${mangaChapterForm.mangaArc}" class="form-control" required>
+				<option value="" selected>Selecciona una arco</option>
+				<option th:if="${!arc.fillerArc}" th:each="arc : ${mangaArc}" th:value="${arc.id}" th:text="${arc.uniqueKey} + ' - ' + ${arc.name}"></option>
 			</select>
 			<div class="alert-danger" th:if="${#fields.hasErrors('mangaArc')}" th:errors="*{mangaArc}"></div>
 		</div>
@@ -30,8 +31,9 @@
     <div class="form-group row">
 		<label class="col-lg-3 col-form-label form-control-label">Tomo</label>
 		<div class="col-lg-9">
-			<select th:field="${mangaChapterForm.volume}" class="form-control" size="5" multiple required>
-				<option th:each="volume : ${volume}" th:value="${volume.id}" th:text="${volume.name}"></option>
+			<select th:field="${mangaChapterForm.volume}" class="form-control"  required>
+				<option value="" selected>Selecciona una tomo</option>
+				<option th:each="volume : ${volume}" th:value="${volume.id}" th:text="${volume.uniqueKey} + ' - ' + ${volume.name}"></option>
 			</select>
 			<div class="alert-danger" th:if="${#fields.hasErrors('volume')}" th:errors="*{volume}"></div>
 		</div>
@@ -46,11 +48,3 @@
 	<div class="alert-danger text-center" th:if="${formErrorMessage}" th:text="${formErrorMessage}">Error Message</div>
 	
 </form>
-
-<script>
-    $(document).ready(function() {
-        $('select[multiple="multiple"] option').click(function() {
-            $(this).prop('selected', !$(this).prop('selected'));
-        });
-    });
-</script>

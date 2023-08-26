@@ -9,57 +9,57 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.api.onepiece.entity.AnimeChapter;
+import com.api.onepiece.entity.Occupation;
 import com.api.onepiece.error.CustomFieldValidationException;
 import com.api.onepiece.error.MyEntityNotFoundException;
-import com.api.onepiece.repository.ArcRepository;
-import com.api.onepiece.service.AnimeChapterServiceImpl;
+import com.api.onepiece.repository.OccupationRepository;
+import com.api.onepiece.service.OccupationService;
 
 import jakarta.validation.Valid;
 
 @Controller
-public class AnimeChapterController {
+public class OccupationController {
     
     @Autowired
-    private AnimeChapterServiceImpl animeChapterService;
+    OccupationRepository occupationRepository;
     @Autowired
-    private ArcRepository arcRepository;
+    OccupationService occupationService;
 
-    @GetMapping("/animeChapterForm")
-    public String animeChapterForm(ModelMap model) {
-        model.addAttribute("animeChapterForm", new AnimeChapter());
+    @GetMapping("/occupationForm")
+    public String occupationForm(ModelMap model) {
+        model.addAttribute("occupationForm", new Occupation());
         prepareAttributesFormView(model, "listTab");
         return "admin-pages/admin-page";
     }
 
-    @PostMapping("/animeChapterForm")
-    public String postAnimeChapterForm(@Valid @ModelAttribute("animeChapterForm")AnimeChapter animeChapter, BindingResult result, ModelMap model){
+    @PostMapping("/occupationForm")
+    public String postOccupationForm(@Valid @ModelAttribute("occupationForm")Occupation occupation, BindingResult result, ModelMap model){
         if(result.hasErrors()){
-            model.addAttribute("animeChapterForm", animeChapter);
+            model.addAttribute("occupationForm", occupation);
             prepareAttributesFormView(model, "formTab");
         } else{
             try {
-                animeChapterService.create(animeChapter);
-                model.addAttribute("animeChapterForm", new AnimeChapter());
+                occupationService.create(occupation);
+                model.addAttribute("occupationForm", new Occupation());
                 prepareAttributesFormView(model, "listTab");
             } catch (CustomFieldValidationException e) {
                 result.reject(e.getField(), null, e.getMessage());
-                model.addAttribute("animeChapterForm", animeChapter);
+                model.addAttribute("occupationForm", occupation);
                 prepareAttributesFormView(model, "formTab");
             } catch (Exception e){
                 model.addAttribute("formErrorMessage", e.getMessage());
-                model.addAttribute("animeChapterForm", animeChapter);
+                model.addAttribute("occupationForm", occupation);
                 prepareAttributesFormView(model, "formTab");
             }
         }
         return "admin-pages/admin-page";
     }
 
-    @GetMapping("editAnimeChapter/{id}")
-    public String animeChapterForm(@PathVariable(name = "id")Long id, ModelMap model) throws Exception{
+    @GetMapping("editOccupation/{id}")
+    public String occupationEdit(@PathVariable(name = "id")Long id, ModelMap model) throws Exception{
         try {
-            AnimeChapter animeChapterToEdit = animeChapterService.getById(id);
-            model.addAttribute("animeChapterForm", animeChapterToEdit);
+            Occupation occupationToEdit = occupationService.getById(id);
+            model.addAttribute("occupationForm", occupationToEdit);
             model.addAttribute("editMode", true);
             prepareAttributesFormView(model, "formTab");
         } catch (MyEntityNotFoundException e) {
@@ -68,25 +68,25 @@ public class AnimeChapterController {
         return "admin-pages/admin-page";
     }
 
-    @PostMapping("editAnimeChapter")
-    public String postAnimeChapterEdit(@Valid @ModelAttribute("animeChapterForm")AnimeChapter animeChapter, BindingResult result, ModelMap model){
+    @PostMapping("editOccupation")
+    public String postOccupationEdit(@Valid @ModelAttribute("occupationForm")Occupation occupation, BindingResult result, ModelMap model){
         if(result.hasErrors()){
-            model.addAttribute("animeChapterForm", animeChapter);
+            model.addAttribute("occupationForm", occupation);
             model.addAttribute("editMode", true);
             prepareAttributesFormView(model, "formTab");
         } else{
             try {
-                animeChapterService.update(animeChapter);
-                model.addAttribute("animeChapterForm", new AnimeChapter());
+                occupationService.update(occupation);
+                model.addAttribute("occupationForm", new Occupation());
                 prepareAttributesFormView(model, "listTab");
             } catch (CustomFieldValidationException e) {
                 result.reject(e.getField(), null, e.getMessage());
-                model.addAttribute("animeChapterForm", animeChapter);
+                model.addAttribute("occupationForm", occupation);
                 model.addAttribute("editMode", true);
                 prepareAttributesFormView(model, "formTab");
             } catch (Exception e){
                 model.addAttribute("formErrorMessage", e.getMessage());
-                model.addAttribute("animeChapterForm", animeChapter);
+                model.addAttribute("occupationForm", occupation);
                 model.addAttribute("editMode", true);
                 prepareAttributesFormView(model, "formTab");
             }
@@ -94,27 +94,26 @@ public class AnimeChapterController {
         return "admin-pages/admin-page";
     }
 
-    @GetMapping("/deleteAnimeChapter/{id}")
-    public String deleteAnimeChapter(@PathVariable(name = "id")Long id, ModelMap model) throws Exception{
+    @GetMapping("/deleteOccupation/{id}")
+    public String deleteOccupation(@PathVariable(name = "id")Long id, ModelMap model) throws Exception{
         try{
-            animeChapterService.delete(id);
+            occupationService.delete(id);
         } catch (MyEntityNotFoundException e){
             throw e;
         }
-        return "redirect:/animeChapterForm";
+        return "redirect:/occupationForm";
     }
     
-    @GetMapping("/animeChapterForm/cancel")
+    @GetMapping("/occupationForm/cancel")
     public String cancelButon(){
-        return "redirect:/animeChapterForm";
+        return "redirect:/occupationForm";
     }
 
     private void prepareAttributesFormView(ModelMap model, String listTabOrFormTab){
         model.addAttribute(listTabOrFormTab, "active");
-        model.addAttribute("animeArc", arcRepository.findAll());
-        model.addAttribute("showAnimeChapterInfo", true);
-        model.addAttribute("selectedFormOption", "Capítulo del anime");
-        model.addAttribute("animeChapterList", animeChapterService.getAll());
+        model.addAttribute("showOccupationInfo", true);
+        model.addAttribute("selectedFormOption", "Ocuparión/Trabajo");
+        model.addAttribute("occupationList", occupationService.getAll());
     }
 
 }

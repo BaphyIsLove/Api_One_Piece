@@ -42,9 +42,9 @@ public class AnimeChapterServiceImpl implements GenericService<AnimeChapter> {
     public AnimeChapter update(AnimeChapter animeChapter) throws Exception {
         AnimeChapter animeChapterToEdit = getById(animeChapter.getId());
         if(!animeChapterToEdit.getName().equals(animeChapterToEdit.getName())&&animeChapterRepository.existsByName(animeChapter.getName())){
-            throw new CustomFieldValidationException("Ya existe un capitulo con ese nombre", "name");
+            throw new CustomFieldValidationException("Ya existe un capítulo con ese nombre", "name");
         } else if(!animeChapterToEdit.getUniqueKey().equals(animeChapterToEdit.getUniqueKey())&&animeChapterRepository.existsByUniqueKey(animeChapter.getUniqueKey())){
-            throw new CustomFieldValidationException("ya existe un capitulo con esa clave", "uniqueKey");
+            throw new CustomFieldValidationException("ya existe un capítulo con esa clave", "uniqueKey");
         } else if(animeChapter.getAnimeArc()==null) {
             throw new CustomFieldValidationException("Selecciona un arco", "animeArc");
         } else {

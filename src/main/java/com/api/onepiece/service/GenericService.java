@@ -11,7 +11,7 @@ public interface GenericService<T>{
 
     public T create(T entity) throws Exception;
 
-    public T update(T entity) throws Exception;
+    public T update(T from) throws Exception;
 
     public void delete(Long id) throws Exception;
 

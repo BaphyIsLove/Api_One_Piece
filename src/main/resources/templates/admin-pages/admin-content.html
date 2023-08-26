@@ -12,7 +12,9 @@
 			<div class="tab-pane fade show" th:classappend=" ${listTab}" id="list" role="tabpanel" aria-labelledby="list-tab">
 				<div class="card">
 					<div class="card-header">
-						<h4>Lista de <span th:text="${showMangaChapterInfo}?'capitulos': ${selectedFormOption}+s"></span></h4>
+						<h4>Lista de <span th:text="
+							${showMangaChapterInfo} or ${showAnimeChapterInfo} ?'capítulos': 
+							${selectedFormOption}+s"></span></h4>
 					</div>
 					<div class="card-body">
 						<div th:if="${showSagasInfo}" th:insert="~{admin-pages/saga-list.html}" th:remove="tag"></div>
@@ -20,6 +22,10 @@
 						<div th:if="${showVolumesInfo}" th:insert="~{admin-pages/volume-list.html}" th:remove="tag"></div>
 						<div th:if="${showMangaChapterInfo}" th:insert="~{admin-pages/manga-chapter-list.html}" th:remove="tag"></div>
 						<div th:if="${showAnimeChapterInfo}" th:insert="~{admin-pages/anime-chapter-list.html}" th:remove="tag"></div>
+						<div th:if="${showCharacterInfo}" th:insert="~{admin-pages/character-list.html}" th:remove="tag"></div>
+						<div th:if="${showCrewInfo}" th:insert="~{admin-pages/crew-list.html}" th:remove="tag"></div>
+						<div th:if="${showOccupationInfo}" th:insert="~{admin-pages/occupation-list.html}" th:remove="tag"></div>
+						<div th:if="${showRaceInfo}" th:insert="~{admin-pages/race-list.html}" th:remove="tag"></div>
 					</div>
 				</div>
 			</div>
@@ -34,6 +40,10 @@
 						<div th:if="${showVolumesInfo}" th:insert="~{admin-pages/volume-form.html}" th:remove="tag"></div>
 						<div th:if="${showMangaChapterInfo}" th:insert="~{admin-pages/manga-chapter-form.html}" th:remove="tag"></div>
 						<div th:if="${showAnimeChapterInfo}" th:insert="~{admin-pages/anime-chapter-form.html}" th:remove="tag"></div>
+						<div th:if="${showCharacterInfo}" th:insert="~{admin-pages/character-form.html}" th:remove="tag"></div>
+						<div th:if="${showCrewInfo}" th:insert="~{admin-pages/crew-form.html}" th:remove="tag"></div>
+						<div th:if="${showOccupationInfo}" th:insert="~{admin-pages/occupation-form.html}" th:remove="tag"></div>
+						<div th:if="${showRaceInfo}" th:insert="~{admin-pages/race-form.html}" th:remove="tag"></div>
 					</div>
 				</div>
 			</div>

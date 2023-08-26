@@ -9,57 +9,57 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.api.onepiece.entity.AnimeChapter;
+import com.api.onepiece.entity.Race;
 import com.api.onepiece.error.CustomFieldValidationException;
 import com.api.onepiece.error.MyEntityNotFoundException;
-import com.api.onepiece.repository.ArcRepository;
-import com.api.onepiece.service.AnimeChapterServiceImpl;
+import com.api.onepiece.repository.RaceRepository;
+import com.api.onepiece.service.RaceService;
 
 import jakarta.validation.Valid;
 
 @Controller
-public class AnimeChapterController {
+public class RaceController {
     
     @Autowired
-    private AnimeChapterServiceImpl animeChapterService;
+    RaceRepository raceRepository;
     @Autowired
-    private ArcRepository arcRepository;
+    RaceService raceService;
 
-    @GetMapping("/animeChapterForm")
-    public String animeChapterForm(ModelMap model) {
-        model.addAttribute("animeChapterForm", new AnimeChapter());
+    @GetMapping("/raceForm")
+    public String raceForm(ModelMap model) {
+        model.addAttribute("raceForm", new Race());
         prepareAttributesFormView(model, "listTab");
         return "admin-pages/admin-page";
     }
 
-    @PostMapping("/animeChapterForm")
-    public String postAnimeChapterForm(@Valid @ModelAttribute("animeChapterForm")AnimeChapter animeChapter, BindingResult result, ModelMap model){
+    @PostMapping("/raceForm")
+    public String postRaceForm(@Valid @ModelAttribute("raceForm")Race race, BindingResult result, ModelMap model){
         if(result.hasErrors()){
-            model.addAttribute("animeChapterForm", animeChapter);
+            model.addAttribute("raceForm", race);
             prepareAttributesFormView(model, "formTab");
         } else{
             try {
-                animeChapterService.create(animeChapter);
-                model.addAttribute("animeChapterForm", new AnimeChapter());
+                raceService.create(race);
+                model.addAttribute("raceForm", new Race());
                 prepareAttributesFormView(model, "listTab");
             } catch (CustomFieldValidationException e) {
                 result.reject(e.getField(), null, e.getMessage());
-                model.addAttribute("animeChapterForm", animeChapter);
+                model.addAttribute("raceForm", race);
                 prepareAttributesFormView(model, "formTab");
             } catch (Exception e){
                 model.addAttribute("formErrorMessage", e.getMessage());
-                model.addAttribute("animeChapterForm", animeChapter);
+                model.addAttribute("raceForm", race);
                 prepareAttributesFormView(model, "formTab");
             }
         }
         return "admin-pages/admin-page";
     }
 
-    @GetMapping("editAnimeChapter/{id}")
-    public String animeChapterForm(@PathVariable(name = "id")Long id, ModelMap model) throws Exception{
+    @GetMapping("editRace/{id}")
+    public String raceForm(@PathVariable(name = "id")Long id, ModelMap model) throws Exception{
         try {
-            AnimeChapter animeChapterToEdit = animeChapterService.getById(id);
-            model.addAttribute("animeChapterForm", animeChapterToEdit);
+            Race raceToEdit = raceService.getById(id);
+            model.addAttribute("raceForm", raceToEdit);
             model.addAttribute("editMode", true);
             prepareAttributesFormView(model, "formTab");
         } catch (MyEntityNotFoundException e) {
@@ -68,25 +68,25 @@ public class AnimeChapterController {
         return "admin-pages/admin-page";
     }
 
-    @PostMapping("editAnimeChapter")
-    public String postAnimeChapterEdit(@Valid @ModelAttribute("animeChapterForm")AnimeChapter animeChapter, BindingResult result, ModelMap model){
+    @PostMapping("editRace")
+    public String postRaceEdit(@Valid @ModelAttribute("raceForm")Race race, BindingResult result, ModelMap model){
         if(result.hasErrors()){
-            model.addAttribute("animeChapterForm", animeChapter);
+            model.addAttribute("raceForm", race);
             model.addAttribute("editMode", true);
             prepareAttributesFormView(model, "formTab");
         } else{
             try {
-                animeChapterService.update(animeChapter);
-                model.addAttribute("animeChapterForm", new AnimeChapter());
+                raceService.update(race);
+                model.addAttribute("raceForm", new Race());
                 prepareAttributesFormView(model, "listTab");
             } catch (CustomFieldValidationException e) {
                 result.reject(e.getField(), null, e.getMessage());
-                model.addAttribute("animeChapterForm", animeChapter);
+                model.addAttribute("raceForm", race);
                 model.addAttribute("editMode", true);
                 prepareAttributesFormView(model, "formTab");
             } catch (Exception e){
                 model.addAttribute("formErrorMessage", e.getMessage());
-                model.addAttribute("animeChapterForm", animeChapter);
+                model.addAttribute("raceForm", race);
                 model.addAttribute("editMode", true);
                 prepareAttributesFormView(model, "formTab");
             }
@@ -94,27 +94,26 @@ public class AnimeChapterController {
         return "admin-pages/admin-page";
     }
 
-    @GetMapping("/deleteAnimeChapter/{id}")
-    public String deleteAnimeChapter(@PathVariable(name = "id")Long id, ModelMap model) throws Exception{
+    @GetMapping("/deleteRace/{id}")
+    public String deleteRace(@PathVariable(name = "id")Long id, ModelMap model) throws Exception{
         try{
-            animeChapterService.delete(id);
+            raceService.delete(id);
         } catch (MyEntityNotFoundException e){
             throw e;
         }
-        return "redirect:/animeChapterForm";
+        return "redirect:/raceForm";
     }
     
-    @GetMapping("/animeChapterForm/cancel")
+    @GetMapping("/raceForm/cancel")
     public String cancelButon(){
-        return "redirect:/animeChapterForm";
+        return "redirect:/raceForm";
     }
 
     private void prepareAttributesFormView(ModelMap model, String listTabOrFormTab){
         model.addAttribute(listTabOrFormTab, "active");
-        model.addAttribute("animeArc", arcRepository.findAll());
-        model.addAttribute("showAnimeChapterInfo", true);
-        model.addAttribute("selectedFormOption", "Capítulo del anime");
-        model.addAttribute("animeChapterList", animeChapterService.getAll());
+        model.addAttribute("showRaceInfo", true);
+        model.addAttribute("selectedFormOption", "Raza/Especie");
+        model.addAttribute("raceList", raceService.getAll());
     }
 
 }

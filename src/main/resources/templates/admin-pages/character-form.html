@@ -1,0 +1,98 @@
+<form class="form" role="form" autocomplete="off" th:object="${characterForm}" th:action="${editMode} ?@{/editCharacter} : @{/characterForm}" method="post">
+
+	<input class="form-control" type="hidden" th:id="${editMode}" th:field="${characterForm.id}">
+
+    <div class="form-group row">
+        <label class="col-lg-3 col-form-label form-control-label">Nombre</label>
+        <div class="col-lg-9">
+            <input class="form-control" type="text" th:field="${characterForm.name}">
+			<div class="alert-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-lg-3 col-form-label form-control-label">Recompenza</label>
+        <div class="col-lg-9">
+            <input class="form-control" type="text" th:field="${characterForm.bounty}">
+			<div class="alert-danger" th:if="${#fields.hasErrors('bounty')}" th:errors="*{bounty}"></div>
+        </div>
+    </div>
+    <div class="form-group row">
+		<label class="col-lg-3 col-form-label form-control-label">Raza/Especie</label>
+		<div class="col-lg-9">
+			<select th:field="${characterForm.race}" class="form-control">
+				<option value="" selected>Selecciona una Raza/Especie</option>
+				<option th:each="race : ${race}" th:value="${race.id}" th:text="${race.name}" th:order-by="${race.name}"></option>
+			</select>
+			<div class="alert-danger" th:if="${#fields.hasErrors('race')}" th:errors="*{race}"></div>
+		</div>
+	</div>
+    <div class="form-group row">
+		<label class="col-lg-3 col-form-label form-control-label">Ocupación/Trabajo</label>
+		<div class="col-lg-9">
+			<select th:field="${characterForm.occupation}" class="form-control">
+				<option value="" selected>Selecciona una ocupación</option>
+				<option th:each="occupation : ${occupation}" th:value="${occupation.id}" th:text="${occupation.name}" th:order-by="${occupation.name}"></option>
+			</select>
+			<div class="alert-danger" th:if="${#fields.hasErrors('occupation')}" th:errors="*{occupation}"></div>
+		</div>
+	</div>
+    <div class="form-group row">
+		<label class="col-lg-3 col-form-label form-control-label">Agrupación</label>
+		<div class="col-lg-9">
+			<select th:field="${characterForm.crew}" class="form-control">
+				<option value="" selected>Selecciona una agrupación</option>
+				<option th:each="crew : ${crew}" th:value="${crew.id}" th:text="${crew.name}" th:order-by="${crew.name}"></option>
+			</select>
+			<div class="alert-danger" th:if="${#fields.hasErrors('crew')}" th:errors="*{crew}"></div>
+		</div>
+	</div>
+    <div class="form-group row">
+        <label class="col-lg-3 col-form-label form-control-label">Edad</label>
+        <div class="col-lg-9">
+            <input class="form-control" type="text" th:field="${characterForm.age}">
+            <div class="alert-danger" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-lg-3 col-form-label form-control-label">Fecha de nacimiento</label>
+        <div class="col-lg-9">
+            <input class="form-control" type="text" th:field="${characterForm.birthdate}" placeholder="día-mes" maxlength="12">
+            <div class="alert-danger" th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}"></div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-lg-3 col-form-label form-control-label">Tamaño/Altura (cm)</label>
+        <div class="col-lg-9">
+            <input class="form-control" type="text" th:field="${characterForm.size}">
+            <div class="alert-danger" th:if="${#fields.hasErrors('size')}" th:errors="*{size}"></div>
+        </div>
+    </div>
+    <div class="form-group row">
+		<label class="col-lg-3 col-form-label form-control-label">Primera aparición en el manga</label>
+		<div class="col-lg-9">
+			<select th:field="${characterForm.firstApparitionManga}" class="form-control">
+				<option value="" selected>Selecciona un Capítulo</option>
+				<option th:each="firstApparitionManga : ${firstApparitionManga}" th:value="${firstApparitionManga.id}" th:text="${firstApparitionManga.name}" th:order-by="${firstApparitionManga.name}"></option>
+			</select>
+			<div class="alert-danger" th:if="${#fields.hasErrors('firstApparitionManga')}" th:errors="*{firstApparitionManga}"></div>
+		</div>
+	</div>
+    <div class="form-group row">
+		<label class="col-lg-3 col-form-label form-control-label">Primera aparición en el anime</label>
+		<div class="col-lg-9">
+			<select th:field="${characterForm.firstApparitionAnime}" class="form-control">
+				<option value="" selected>Selecciona un Capítulo</option>
+				<option th:each="firstApparitionAnime : ${firstApparitionAnime}" th:value="${firstApparitionAnime.id}" th:text="${firstApparitionAnime.name}" th:order-by="${firstApparitionAnime.name}"></option>
+			</select>
+			<div class="alert-danger" th:if="${#fields.hasErrors('firstApparitionAnime')}" th:errors="*{firstApparitionAnime}"></div>
+		</div>
+	</div>
+	<div class="form-group row">
+		<div class="col-lg-12 text-center">
+			<a class="btn btn-secondary col-lg-3" th:href="@{/characterForm/cancel}">Cancelar</a>
+			<input type="submit" class="btn btn-primary col-lg-3" value="Guardar" th:value="${editMode}?'Guardar Cambios':'Crear'">
+		</div>
+	</div>
+	<div class="alert-danger text-center" th:if="${formErrorMessage}" th:text="${formErrorMessage}">Error Message</div>
+	
+</form>

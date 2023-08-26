@@ -117,7 +117,7 @@ public class MangaChapterController {
         model.addAttribute("volume", volumeRepository.findAll());
         model.addAttribute("mangaArc", arcRepository.findAll());
         model.addAttribute("showMangaChapterInfo", true);
-        model.addAttribute("selectedFormOption", "Capitulo del manga");
+        model.addAttribute("selectedFormOption", "Capítulo del manga");
         model.addAttribute("mangaChapterList", mangaChapterService.getAll());
     }
 

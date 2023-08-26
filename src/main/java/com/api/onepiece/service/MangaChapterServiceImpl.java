@@ -22,7 +22,7 @@ public class MangaChapterServiceImpl implements GenericService<MangaChapter> {
 
     @Override
     public MangaChapter getById(Long id) throws Exception {
-        return mangaChapterRepository.findById(id).orElseThrow(()-> new MyEntityNotFoundException("Capitulo no encontrado"));
+        return mangaChapterRepository.findById(id).orElseThrow(()-> new MyEntityNotFoundException("capítulo no encontrado"));
     }
 
     @Override
@@ -42,9 +42,9 @@ public class MangaChapterServiceImpl implements GenericService<MangaChapter> {
     public MangaChapter update(MangaChapter fromMangaChapter) throws Exception {
         MangaChapter toMangaChapter = getById(fromMangaChapter.getId());
         if(!toMangaChapter.getName().equals(fromMangaChapter.getName())&&mangaChapterRepository.existsByName(fromMangaChapter.getName())){
-            throw new CustomFieldValidationException("Ya existe un capitulo con ese nombre", "name");
+            throw new CustomFieldValidationException("Ya existe un capítulo con ese nombre", "name");
         } else if(!toMangaChapter.getUniqueKey().equals(fromMangaChapter.getUniqueKey())&&mangaChapterRepository.existsByUniqueKey(fromMangaChapter.getUniqueKey())){
-            throw new CustomFieldValidationException("ya existe un capitulo con esa clave", "uniqueKey");
+            throw new CustomFieldValidationException("ya existe un capítulo con esa clave", "uniqueKey");
         } else if(fromMangaChapter.getVolume()==null){
             throw new CustomFieldValidationException("Selecciona un tomo", "volume");
         } else {
