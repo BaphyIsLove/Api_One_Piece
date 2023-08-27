@@ -75,4 +75,10 @@ public class CharacterEntity {
     @JoinColumn(name = "firstApparitionAnime_id")
     private AnimeChapter firstApparitionAnime;
 
+    @Column
+    private boolean status;
+
+    @Column
+    private String description;
+
 }

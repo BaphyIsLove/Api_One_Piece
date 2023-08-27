@@ -11,7 +11,12 @@
 		</thead>
 		<tbody>
 			<tr th:each="character: ${characterList}" th:class="${#strings.isEmpty(character.name)} ? 'missing-data-row' : ''">
-                <td th:text="${character.name}"></td>
+                <td>
+                    <ul class="list-unstyled">
+                        <li th:text="${character.name}"></li>
+                        <li th:text="${character.status?'muerto': ''}"></li>
+                    </ul>
+                </td>
                 <td>
                     <ul class="list-unstyled">
                         <li th:each="akumaNoMi: ${character.akumaNoMi}" th:text="${'Fruta: ' + akumaNoMi.name}"></li>
