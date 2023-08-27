@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.api.onepiece.entity.CharacterEntity;
 import com.api.onepiece.error.CustomFieldValidationException;
 import com.api.onepiece.error.MyEntityNotFoundException;
+import com.api.onepiece.repository.AkumaNoMiRepository;
 import com.api.onepiece.repository.AnimeChapterRepository;
 import com.api.onepiece.repository.CharacterEntityRepository;
 import com.api.onepiece.repository.CrewRepository;
@@ -42,6 +43,8 @@ public class CharacterEntityController {
     RoleRepository roleRepository;
     @Autowired
     OrganizationzRepository organizationzRepository;
+    @Autowired
+    AkumaNoMiRepository akumaNoMiRepository;
 
     @Autowired
     CharacterEntityService characterService;
@@ -142,5 +145,6 @@ public class CharacterEntityController {
         model.addAttribute("organizationz", organizationzRepository.findAll());
         model.addAttribute("firstApparitionAnime", animeRepository.findAll());
         model.addAttribute("firstApparitionManga", mangaRepository.findAll());
+        model.addAttribute("akumaNoMi", akumaNoMiRepository.findAll());
     }
 }

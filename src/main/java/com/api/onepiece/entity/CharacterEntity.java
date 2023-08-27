@@ -26,6 +26,10 @@ public class CharacterEntity {
     @Column(unique = true)
     @NotBlank
     private String name;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "akumaNoMi_id")
+    private AkumaNoMi akumaNoMi;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "race_id")

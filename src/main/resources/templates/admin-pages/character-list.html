@@ -14,6 +14,7 @@
                 <td th:text="${character.name}"></td>
                 <td>
                     <ul class="list-unstyled">
+                        <li th:each="akumaNoMi: ${character.akumaNoMi}" th:text="${'Fruta: ' + akumaNoMi.name}"></li>
                         <li th:each="occupation: ${character.occupation}" th:text="${'Ocupacion: ' + occupation.name}"></li>
                         <li th:text="${'Recompenza : ' + character.bounty}"></li>
                         <li th:each="organizationz: ${character.organizationz}" th:text="${'Afiliado a: ' + organizationz.name}"></li>

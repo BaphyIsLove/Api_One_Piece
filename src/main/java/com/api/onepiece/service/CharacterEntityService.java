@@ -62,6 +62,7 @@ public class CharacterEntityService implements GenericService<CharacterEntity>{
         to.setFirstApparitionManga(from.getFirstApparitionManga());
         to.setFirstApparitionAnime(from.getFirstApparitionAnime());
         to.setOrganizationz(from.getOrganizationz());
+        to.setAkumaNoMi(from.getAkumaNoMi());
     }
 
     @Override

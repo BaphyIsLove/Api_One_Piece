@@ -1,0 +1,25 @@
+<div class="table-responsive">
+    <table id="listOf" class="table table-bordered table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Usuario</th>
+                <th class="col-lg-1"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="akumaNoMi: ${akumaNoMiList}">
+                <td th:text="${akumaNoMi.name}"></td>
+                <td>
+                    <ul class="list-unstyled">
+                        <li th:each="users: ${akumaNoMi.user}" th:text="${users.name}"></li>
+					</ul>
+				</td>
+                <td>
+                    <a href="#" th:href="@{'/editAkumaNoMi/' + ${akumaNoMi.id}}"><i class="fas fa-edit"></i></a> | 
+                    <a type="submit" th:href="@{'deleteAkumaNoMi/' + ${akumaNoMi.id}}" onclick="return confirm('¿Estás seguro de que deseas eliminar este registro? Esta acción no se puede deshacer y podria alterar todos los registros.')"><i class="fas fa-user-times"></i></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
