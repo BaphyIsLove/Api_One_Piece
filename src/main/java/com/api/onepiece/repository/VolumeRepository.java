@@ -9,7 +9,7 @@ import com.api.onepiece.entity.Volume;
 
 public interface VolumeRepository extends JpaRepository<Volume, Long>{
     
-    @Query("SELECT MAX(SUBSTRING(v.uniqueKey, 4)) FROM Volume v WHERE SUBSTRING(v.uniqueKey, 1, 1) = :prefix")
+    @Query("SELECT MAX(SUBSTRING(v.uniqueKey, 3)) FROM Volume v WHERE SUBSTRING(v.uniqueKey, 1, 1) = :prefix")
     public Long findMaxNumberByPrefix(String prefix);
 
     public boolean existsByUniqueKey(String uniqueKey);

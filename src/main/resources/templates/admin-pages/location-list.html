@@ -1,0 +1,25 @@
+<div class="table-responsive">
+	<table id="listOf" class="table table-bordered table-hover">
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col" class="col-lg-2">Nombre</th>
+				<th scope="col" class="col-lg-2">Ubicación</th>
+				<th class="col-lg-1"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="location: ${locationList}">
+				<td th:text="${location.name}"></td>
+				<td>
+					<ul class="list-unstyled">
+						<li th:each="ubication: ${location.ubication}" th:text="${ubication.name}"></li>
+					</ul>
+				</td>
+				<td>
+					<a href="#" th:href="@{'/editLocation/' + ${location.id}}"><i class="fas fa-edit"></i></a> | 
+					<a type="submit" th:href="@{'deleteLocation/' + ${location.id}}" onclick="return confirm('¿Estás seguro de que deseas eliminar este registro?')"><i class="fas fa-user-times"></i></a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

@@ -65,6 +65,7 @@ public class CharacterEntityService implements GenericService<CharacterEntity>{
         to.setAkumaNoMi(from.getAkumaNoMi());
         to.setStatus(from.isStatus());
         to.setDescription(from.getDescription());
+        to.setOrigin(from.getOrigin());
     }
 
     @Override

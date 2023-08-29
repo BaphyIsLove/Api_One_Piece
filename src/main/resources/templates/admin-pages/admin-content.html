@@ -29,6 +29,8 @@
 						<div th:if="${showRoleInfo}" th:insert="~{admin-pages/role-list.html}" th:remove="tag"></div>
 						<div th:if="${showOrganizationzInfo}" th:insert="~{admin-pages/organizationz-list.html}" th:remove="tag"></div>
 						<div th:if="${showAkumaNoMiInfo}" th:insert="~{admin-pages/akuma-list.html}" th:remove="tag"></div>
+						<div th:if="${showUbicationInfo}" th:insert="~{admin-pages/ubication-list.html}" th:remove="tag"></div>
+						<div th:if="${showLocationInfo}" th:insert="~{admin-pages/location-list.html}" th:remove="tag"></div>
 					</div>
 				</div>
 			</div>
@@ -50,6 +52,8 @@
 						<div th:if="${showRoleInfo}" th:insert="~{admin-pages/role-form.html}" th:remove="tag"></div>
 						<div th:if="${showOrganizationzInfo}" th:insert="~{admin-pages/organizationz-form.html}" th:remove="tag"></div>
 						<div th:if="${showAkumaNoMiInfo}" th:insert="~{admin-pages/akuma-form.html}" th:remove="tag"></div>
+						<div th:if="${showUbicationInfo}" th:insert="~{admin-pages/ubication-form.html}" th:remove="tag"></div>
+						<div th:if="${showLocationInfo}" th:insert="~{admin-pages/location-form.html}" th:remove="tag"></div>
 					</div>
 				</div>
 			</div>

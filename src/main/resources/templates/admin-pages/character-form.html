@@ -49,6 +49,16 @@
 			<div class="alert-danger" th:if="${#fields.hasErrors('race')}" th:errors="*{race}"></div>
 		</div>
 	</div>
+	<div class="form-group row">
+		<label class="col-lg-3 col-form-label form-control-label">Lugar de origen</label>
+		<div class="col-lg-9">
+			<select th:field="${characterForm.crewRoles}" class="form-control">
+				<option value="" selected>Selecciona un lugar</option>
+				<option th:each="origin : ${location}" th:value="${origin.id}" th:text="${origin.name}" th:order-by="${origin.name}"></option>
+			</select>
+			<div class="alert-danger" th:if="${#fields.hasErrors('origin')}" th:errors="*{origin}"></div>
+		</div>
+	</div>
     <div class="form-group row">
 		<label class="col-lg-3 col-form-label form-control-label">Ocupación/Trabajo</label>
 		<div class="col-lg-9">

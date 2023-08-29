@@ -43,7 +43,7 @@ public class CharacterEntity {
     private Long bounty;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "_id")
+    @JoinColumn(name = "organizationz_id")
     private Organizationz organizationz;
     
     @ManyToOne(fetch = FetchType.LAZY)
@@ -80,5 +80,9 @@ public class CharacterEntity {
 
     @Column
     private String description;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "origin_id")
+    private Location origin;
 
 }

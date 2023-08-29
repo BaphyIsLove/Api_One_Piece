@@ -16,6 +16,7 @@ import com.api.onepiece.repository.AkumaNoMiRepository;
 import com.api.onepiece.repository.AnimeChapterRepository;
 import com.api.onepiece.repository.CharacterEntityRepository;
 import com.api.onepiece.repository.CrewRepository;
+import com.api.onepiece.repository.LocationRepository;
 import com.api.onepiece.repository.MangaChapterRepository;
 import com.api.onepiece.repository.OccupationRepository;
 import com.api.onepiece.repository.OrganizationzRepository;
@@ -45,6 +46,8 @@ public class CharacterEntityController {
     OrganizationzRepository organizationzRepository;
     @Autowired
     AkumaNoMiRepository akumaNoMiRepository;
+    @Autowired
+    LocationRepository locationRepository;
 
     @Autowired
     CharacterEntityService characterService;
@@ -146,5 +149,6 @@ public class CharacterEntityController {
         model.addAttribute("firstApparitionAnime", animeRepository.findAll());
         model.addAttribute("firstApparitionManga", mangaRepository.findAll());
         model.addAttribute("akumaNoMi", akumaNoMiRepository.findAll());
+        model.addAttribute("location", locationRepository.findAll());
     }
 }
